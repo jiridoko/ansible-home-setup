@@ -1,0 +1,154 @@
+hostname: homer.santorini.dokoupil.cz
+systemd_boot: true
+
+afp:
+  hostname: "homer"
+  announce: false
+  domain: "santorini.dokoupil.cz"
+  mimic_model: "AirPort7,120"
+  admin_group: "jiri"
+  hosts_allow: "172.16.32.0/24"
+  shares:
+    - name: TimeMachine
+      path: /mnt/raid/timemachine
+      users: "jiri ansible root nobody"
+      timemachine: yes
+    - name: Video
+      path: /mnt/raid/video
+      users: "jiri ansible root nobody"
+      timemachine: no
+    - name: Porn
+      path: /mnt/raid/porn
+      users: "jiri ansible root nobody"
+      timemachine: no
+    - name: Music
+      path: /mnt/raid/music
+      users: "jiri ansible root nobody"
+      timemachine: no
+    - name: General
+      path: /mnt/raid/general
+      users: "jiri ansible root nobody"
+      timemachine: no
+    - name: Pictures
+      path: /mnt/raid/pictures
+      users: "jiri ansible root nobody"
+      timemachine: no
+    - name: SSD
+      path: /mnt/ssd
+      users: "jiri ansible root nobody"
+      timemachine: no
+
+nfs:
+  shares:
+    - name: Video
+      path: /mnt/raid/video
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: Porn
+      path: /mnt/raid/porn
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: Music
+      path: /mnt/raid/music
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: Pictures
+      path: /mnt/raid/pictures
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: General
+      path: /mnt/raid/general
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: SSD
+      path: /mnt/ssd
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: docker_registry
+      path: /mnt/ssd/docker_registry
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+    - name: transmission_downloads
+      path: /mnt/ssd/transmission_downloads
+      allowed_range: "172.16.32.0/24"
+      mount_options: "rw,sync"
+
+dlna:
+  name: "Homer DLNA"
+  cache: "/var/cache/minidlna"
+  inotify: "yes"
+  port: 8200
+  log_dir: "/var/log"
+  shares:
+    - name: Music
+      path: /mnt/raid/music
+      type: A
+    - name: Video
+      path: /mnt/raid/video
+      type: V
+    - name: Porn
+      path: /mnt/raid/porn
+      type: V
+    - name: Pictures
+      path: /mnt/raid/pictures
+      type: P
+
+samba:
+  workgroup: "WORKGROUP"
+  name: "homer"
+  announce: true
+  mimic_model: "AirPort7,120"
+  hosts_allow: "172.16.32."
+  wins_support: "yes"
+  logs: "/var/log/samba/log.%m"
+  log_dir: "/var/log/samba/"
+  shares:
+    - name: TimeMachine
+      path: /mnt/raid/timemachine
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: yes
+    - name: Video
+      path: /mnt/raid/video
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+    - name: Porn
+      path: /mnt/raid/porn
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+    - name: Music
+      path: /mnt/raid/music
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+    - name: General
+      path: /mnt/raid/general
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+    - name: Pictures
+      path: /mnt/raid/pictures
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+    - name: SSD
+      path: /mnt/ssd
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no

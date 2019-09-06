@@ -1,0 +1,12 @@
+[Unit]
+Description={{ description }}
+After={{ after }}
+
+[Service]
+Type=simple
+WorkingDirectory={{ cwd }}
+ExecStart={{ startcmd }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,93 @@
+---
+- name: Install dependencies
+  package:
+    state: present
+    name:
+    - "python-periphery"
+    - "python-pip"
+    - "i2c-tools"
+    - "xorg-xrandr"
+    - "libnewt"
+  tags:
+  - flowers
+
+#- name: Install deps from AUR
+#  command: yaourt -S --noconfirm raspi-config
+#  become_user: ansible
+#  tags:
+#  - flowers
+
+- name: Enable I2C
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: "^#?dtparam"
+    line: "dtparam=i2c_arm=on"
+    state: present
+  register: boot_config
+  tags:
+  - flowers
+
+- name: Enable I2C module
+  lineinfile:
+    dest: /etc/modules-load.d/raspberrypi.conf
+    regexp: "^#?i2c-dev"
+    line: "i2c-dev"
+    state: present
+  register: i2c_module
+  tags:
+  - flowers
+
+- name: Enable snd-bcm2835 module
+  lineinfile:
+    dest: /etc/modules-load.d/raspberrypi.conf
+    regexp: "^#?snd-bcm2835"
+    line: "snd-bcm2835"
+    state: present
+  register: bcm2835_module
+  tags:
+  - flowers
+
+- name: Reboot
+  reboot:
+    reboot_timeout: 300
+  when: boot_config.changed or i2c_module.changed or bcm2835_module.changed
+  tags:
+  - flowers
+
+- name: Check if Adafruit ADS1x15 python lib is installed
+  command: 'python -c "import "Adafruit_ADS1x15'
+  register: ads1x15_check
+  changed_when: ads1x15_check.rc == 1
+  failed_when: ads1x15_check.rc not in [0,1]
+  tags:
+  - flowers
+
+- name: Install spidev adafruit-pureio adafruit-gpio smbus
+  command: pip install spidev adafruit-pureio adafruit-gpio smbus
+  when: ads1x15_check.changed
+  tags:
+  - flowers
+
+- name: Pull Adafruit ADS1x15 python lib
+  command: git clone https://github.com/adafruit/Adafruit_Python_ADS1x15.git
+  args:
+    chdir: /root
+  when: ads1x15_check.changed
+  tags:
+  - flowers
+
+- name: Install Adafruit ADS1x15 python lib
+  command: python3 setup.py install
+  args:
+    chdir: /root/Adafruit_Python_ADS1x15/
+  when: ads1x15_check.changed
+  tags:
+  - flowers
+
+- name: Remove previous Adafruit ADS1x15 directories
+  file:
+    state: absent
+    path: "/root/Adafruit_Python_ADS1x15/"
+  when: ads1x15_check.changed
+  tags:
+  - flowers

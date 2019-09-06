@@ -1,0 +1,47 @@
+---
+- name: Install Ubuntu basic tools
+  package:
+    state: present
+    name:
+    - "docker.io"
+    - "docker-compose"
+  when: ansible_distribution == "Ubuntu"
+
+- name: Start docker engine
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Set docker-compose
+  template:
+    src: rocketchat-docker-compose.yml.j2
+    dest: /opt/docker-compose.yml
+    owner: root
+    group: root
+    mode: "644"
+
+- name: Start mongo
+  command: docker-compose up -d mongo
+  args:
+    chdir: "/opt"
+
+- name: Initialise mongo replica
+  command: docker-compose up -d mongo-init-replica
+  args:
+    chdir: "/opt"
+
+- name: Start smtp
+  command: docker-compose up -d smtp
+  args:
+    chdir: "/opt"
+
+- name: Start rocket chat
+  command: docker-compose up -d rocketchat
+  args:
+    chdir: "/opt"
+
+- name: Start traefik
+  command: docker-compose up -d traefik
+  args:
+    chdir: "/opt"

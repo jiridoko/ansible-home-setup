@@ -1,0 +1,32 @@
+---
+- name: Disable root SSH password auth
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?PermitRootLogin"
+    line: "PermitRootLogin prohibit-password"
+    state: present
+  notify: restart sshd
+
+- name: Disable password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+  notify: restart sshd
+
+- name: Set allowed ssh users
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?AllowUsers"
+    line: "AllowUsers jiri root ansible vagrant"
+    state: present
+  notify: restart sshd
+
+- name: Set git port
+  copy:
+    content: |
+      Host git git.santorini.dokoupil.cz
+        Port 222
+        User git
+    dest: /etc/ssh/ssh_config

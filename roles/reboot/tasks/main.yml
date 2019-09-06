@@ -1,0 +1,18 @@
+---
+- name: Install cronie
+  package:
+    state: present
+    name: cronie
+
+- name: Start and enable cron
+  service:
+    name: cronie
+    state: started
+    enabled: yes
+
+- name: Reboot at 2am
+  cron:
+    name: Reboot
+    minute: 0
+    hour: 2
+    job: "reboot"

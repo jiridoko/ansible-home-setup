@@ -1,0 +1,142 @@
+---
+- name: Update cache
+  pacman:
+    update_cache: yes
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - update
+
+- name: Update system
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  register: sys_update
+  when:
+    - ansible_distribution == "Archlinux"
+    - update_system
+  tags:
+  - update
+
+- name: Update systemd boot
+  command: bootctl update
+  when:
+    - ansible_distribution == "Archlinux"
+    - ansible_machine == "x86_64"
+    - update_system
+    - systemd_boot
+    - '"systemd" in sys_update.packages'
+  tags:
+  - update
+
+- name: Reboot system
+  reboot:
+    reboot_timeout: 300
+  when:
+    - ansible_distribution == "Archlinux"
+    - update_system
+    - '"linux" in sys_update.packages'
+  tags:
+  - update
+
+- name: Install ArchLinux basic tools
+  package:
+    state: present
+    name:
+    - "sudo"
+    - "vim"
+    - "htop"
+    - "curl"
+    - "wget"
+    - "dnsutils"
+    - "jq"
+    - "go"
+    - "net-tools"
+    - "git"
+    - "base-devel"
+    - "gnu-netcat"
+    - "iperf"
+    - "iperf3"
+    - "iotop"
+    - "python"
+    - "python-flask"
+    - "python-pip"
+    - "python-cryptography"
+    - "nfs-utils"
+    - "sl"
+    - "screen"
+    - "tcpdump"
+    - "traceroute"
+    - "zip"
+    - "unzip"
+    - "tree"
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - packages
+
+- name: Install Ubuntu basic tools
+  package:
+    state: present
+    name:
+    - "sudo"
+    - "vim"
+    - "htop"
+    - "curl"
+    - "wget"
+    - "dnsutils"
+    - "jq"
+    - "golang"
+    - "net-tools"
+    - "git"
+    - "build-essential"
+    - "netcat"
+    - "iperf"
+    - "iperf3"
+    - "iotop"
+    - "python"
+    - "python-flask"
+    - "python-pip"
+    - "python-cryptography"
+    - "nfs-common"
+    - "sl"
+    - "screen"
+    - "tcpdump"
+    - "traceroute"
+    - "zip"
+    - "unzip"
+    - "tree"
+  when: ansible_distribution == "Ubuntu"
+  tags:
+  - packages
+
+- name: Start NFS client
+  service:
+    name: nfs-client.target
+    state: started
+    enabled: yes
+
+- name: Set screenrc for all users
+  copy:
+    content: |
+      # Always show a status line in the window footer
+      hardstatus on
+      hardstatus alwayslastline
+      #hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
+      hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %D %d %M %Y %c:%s "
+      
+      # Autodetach session on hangup instead of
+      # terminating screen completely
+      autodetach on
+      
+      # Turn off the splash screen
+      startup_message off
+      
+      # set log on all windows
+      deflog on
+    dest: "~{{ item }}/.screenrc"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0644
+  loop:
+    - "ansible"
+    - "jiri"
+    - "root"

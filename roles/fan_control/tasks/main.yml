@@ -1,0 +1,55 @@
+---
+- name: Install dependencies
+  package:
+    state: present
+    name:
+    - "python-pyserial"
+  tags:
+  - pwm
+
+- name: Check if the pwm-control directory is there
+  command: ls ~ansible/pwm-fan-control
+  register: pwm_control_exists
+  failed_when: pwm_control_exists.rc not in [0,1,2]
+  changed_when: pwm_control_exists.rc not in [0,1,2]
+  tags:
+  - pwm
+
+- name: Clone pwm-control
+  command: git clone https://github.com/jiridoko/pwm-fan-control.git
+  args:
+    chdir: ~ansible/
+  when: pwm_control_exists.rc != 0
+  tags:
+  - pwm
+
+- name: Update pwm-control
+  command: git pull
+  args:
+    chdir: ~ansible/pwm-fan-control
+  when: pwm_control_exists.rc == 0
+  tags:
+  - pwm
+
+- name: Copy the service file
+  copy:
+    src: ~ansible/pwm-fan-control/pwm.service
+    remote_src: yes
+    dest: /etc/systemd/system/pwm.service
+  register: copy_pwm_service
+  tags:
+  - pwm
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: copy_pwm_service.changed
+  tags:
+  - pwm
+
+- name: Start and enable the pwm service
+  service:
+    name: pwm
+    state: started
+    enabled: yes
+  tags:
+  - pwm

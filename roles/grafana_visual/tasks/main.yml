@@ -1,0 +1,63 @@
+---
+- name: Install Chromium and X server
+  package:
+    state: present
+    name:
+    - "xorg"
+    - "xorg-apps"
+    - "xorg-drivers"
+    - "xorg-xinit"
+    - "chromium"
+  tags:
+  - grafana
+
+- name: Create Xwrapper
+  copy:
+    content: |
+      allowed_users=anybody
+      needs_root_rights=yes
+    dest: /etc/X11/Xwrapper.config
+  tags:
+  - grafana
+
+- name: Create xorg.conf
+  copy:
+    content: |
+      Section "ServerFlags"
+          Option "StandbyTime" "0"
+          Option "SuspendTime" "0"
+          Option "OffTime" "0"
+          Option "BlankTime" "0"
+      EndSection
+    dest: /etc/X11/xorg.conf
+  tags:
+  - grafana
+
+- name: Create Chromium service
+  copy:
+    content: |
+      [Unit]
+      Description=Chromium
+      After=network.target
+      [Service]
+      Type=simple
+      User=ansible
+      ExecStart=/usr/bin/startx /usr/bin/chromium --app={{ grafana_url }} --kiosk --window-size=1366,768 --window-position=0,0 --no-first-run --overscroll-history-navigarion=0 --disable-pinch --disable-infobars -- vt5
+      Restart=always
+      KillMode=control-group
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/chromium.service
+  notify:
+  - reload systemd
+  - restart chromium
+  tags:
+  - grafana
+
+- name: Start Chromium
+  service:
+    name: chromium
+    state: started
+    enabled: yes
+  tags:
+  - grafana

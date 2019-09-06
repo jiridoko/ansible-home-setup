@@ -1,0 +1,6 @@
+---
+- name: reload_systemd
+  command: systemctl daemon-reload
+
+- name: reload_hass
+  command: systemctl restart hass

@@ -1,0 +1,174 @@
+---
+- name: Install dependencies
+  package:
+    state: present
+    name:
+    - "python-periphery"
+    - "python-pip"
+    - "i2c-tools"
+  tags:
+  - barometer
+
+- name: Enable I2C
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: "^#?dtparam"
+    line: "dtparam=i2c_arm=on"
+    state: present
+  register: boot_config
+  tags:
+  - barometer
+
+- name: Enable I2C module
+  lineinfile:
+    dest: /etc/modules-load.d/raspberrypi.conf
+    regexp: "^#?i2c-dev"
+    line: "i2c-dev"
+    state: present
+  register: i2c_module
+  tags:
+  - barometer
+
+- name: Enable snd-bcm2835 module
+  lineinfile:
+    dest: /etc/modules-load.d/raspberrypi.conf
+    regexp: "^#?snd-bcm2835"
+    line: "snd-bcm2835"
+    state: present
+  register: bcm2835_module
+  tags:
+  - barometer
+
+- name: Reboot
+  reboot:
+    reboot_timeout: 300
+  when: boot_config.changed or i2c_module.changed or bcm2835_module.changed
+  tags:
+  - barometer
+
+- name: Check if Adafruit BMP085 python lib is installed
+  command: 'python -c "import Adafruit_BMP.BMP085 as BMP085"'
+  register: bmp_check
+  changed_when: bmp_check.rc == 1
+  failed_when: bmp_check.rc not in [0,1]
+  tags:
+  - barometer
+
+- name: Install spidev adafruit-pureio adafruit-gpio smbus
+  command: pip install spidev adafruit-pureio adafruit-gpio smbus
+  when: bmp_check.changed
+  tags:
+  - barometer
+
+- name: Pull Adafruit BMP085 python lib
+  command: git clone https://github.com/adafruit/Adafruit_Python_BMP.git
+  args:
+    chdir: /root
+  when: bmp_check.changed
+  tags:
+  - barometer
+
+- name: Install Adafruit BMP085 python lib
+  command: python3 setup.py install
+  args:
+    chdir: /root/Adafruit_Python_BMP/
+  when: bmp_check.changed
+  tags:
+  - barometer
+
+- name: Remove previous Adafruit BMP085 directories
+  file:
+    state: absent
+    path: "/root/Adafruit_Python_BMP/"
+  when: bmp_check.changed
+  tags:
+  - barometer
+
+- name: Create the python script
+  copy:
+    content: |
+      #!/usr/bin/env python3
+      from flask import Flask
+      import subprocess
+      import sys
+      import time
+      from threading import Thread
+      import Adafruit_BMP.BMP085 as BMP085
+      
+      app = Flask(__name__)
+      
+      global pressure
+      pressure="0.0"
+
+      global sensor
+      sensor = BMP085.BMP085()
+      
+      def updater():
+          while True:
+              update_pressure()
+              time.sleep(1)
+
+      def update_pressure():
+          global pressure
+          global sensor
+          try:
+              pressure = str(sensor.read_pressure()/100.00)
+          except:
+              sensor = BMP085.BMP085()
+      
+      @app.route('/metrics')
+      def get_pressure():
+          global pressure
+          return "custom_barometer{} "+pressure
+
+      @app.route('/simple')
+      def get_simple_pressure():
+          global pressure
+          return pressure
+      
+      if __name__ == '__main__':
+          t = Thread(target=updater)
+          update_pressure()
+          t.start()
+          app.run(debug=False, port=9103, host="0.0.0.0")
+    dest: /opt/barometer.py
+    mode: 0755
+    owner: root
+    group: root
+  notify:
+  - restart barometer
+  tags:
+  - barometer
+
+- name: Create the systemd service
+  copy:
+    content: |
+      [Unit]
+      Description=Custom Barometer sensor
+      After=network.target
+
+      [Service]
+      Type=simple
+      WorkingDirectory=/root
+      ExecStart=/opt/barometer.py
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/barometer.service
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+  - reload systemd
+  - restart temp
+  tags:
+  - barometer
+
+- name: Start and enable the barometer service
+  service:
+    name: barometer
+    state: started
+    enabled: yes
+  tags:
+  - barometer

@@ -1,0 +1,20 @@
+---
+- name: restart afp
+  service:
+    name: netatalk
+    state: restarted
+
+- name: restart avahi
+  service:
+    name: avahi-daemon
+    state: restarted
+
+- name: restart minidlna
+  service:
+    name: minidlna
+    state: restarted
+
+- name: restart samba
+  service:
+    name: smb
+    state: restarted

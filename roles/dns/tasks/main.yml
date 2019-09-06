@@ -1,0 +1,34 @@
+---
+- name: Install bind name server
+  package:
+    state: present
+    name:
+      - "bind"
+      - "bind-tools"
+  tags:
+    - zone
+
+- name: Enable DNS server service
+  service:
+    name: named
+    state: started
+    enabled: yes
+  tags:
+    - zone
+
+- name: Setup Zone files
+  template:
+    src: zone.j2
+    dest: "/var/named/{{ item.name }}.zone"
+  loop: "{{ domains }}"
+  notify: restart bind
+  tags:
+    - zone
+
+- name: Setup bind config
+  template:
+    src: named.conf.j2
+    dest: "/etc/named.conf"
+  notify: restart bind
+  tags:
+    - zone

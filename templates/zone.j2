@@ -1,0 +1,11 @@
+; DO NOT EDIT BY HAND
+; This file is managed by Ansible
+@ 3600 SOA {{ ansible_fqdn }}. admin.{{ item.name }}. (
+           {{ ansible_date_time.epoch }} ; serial
+           {{ item.refresh }} ; refresh
+           {{ item.retry }} ; retry
+           {{ item.expiry }} ; expiry
+           {{ item.ttl }} ) ; minimum ttl
+{% for r in item.records %}
+{{ r.host }} {{ r.ttl }} IN {{ r.type }} {{ r.address }}
+{% endfor %}

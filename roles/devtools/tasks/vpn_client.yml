@@ -1,0 +1,36 @@
+---
+- name: Install openvpn
+  package:
+    state: present
+    name:
+    - "openvpn"
+
+- name: Check the p12 key
+  command: sha1sum /etc/openvpn/client/client.p12
+  register: p12_check
+  changed_when: p12_check.rc == 1
+  failed_when: p12_check.rc not in [0,1]
+
+- name: Copy the p12 key
+  shell: "echo '{{openvpn_p12}}' | base64 -d > /etc/openvpn/client/client.p12"
+  when: p12_check.rc == 1 or p12_check.stdout.find('497b16b64db7218b9b62e684f7c0b9c56251bb83') != -1
+  notify: restart openvpn-client
+
+- name: Set the config file
+  template:
+    src: openvpn_client.j2
+    dest: "{{ openvpn_config_path }}"
+  notify: restart openvpn-client
+
+- name: Start and enable the client systemd service
+  service:
+    name: openvpn-client@client
+    state: started
+    enabled: yes
+
+- name: Set hostname czenda
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^#?10.9.0.1"
+    line: "10.9.0.1 czenda czenda.local czenda.dokoupil.cz czenda.santorini.dokoupil.cz"
+    state: present

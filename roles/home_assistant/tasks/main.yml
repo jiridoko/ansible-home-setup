@@ -1,0 +1,66 @@
+---
+- name: Install necessary tools
+  package:
+    state: present
+    name:
+    - "python-pip"
+  tags:
+  - home_assistant
+
+- name: Check for previous installation
+  command: which hass
+  register: hass_check
+  become_user: ansible
+  changed_when: hass_check.rc == 1
+  failed_when: hass_check.rc not in [0,1]
+  tags:
+  - home_assistant
+
+- name: Install home-assistant
+  command: pip3 install --user homeassistant
+  when: hass_check.rc == 1
+  become_user: ansible
+  tags:
+  - home_assistant
+
+- name: Set up home-assistant
+  copy:
+    content: "{{ hass_config | to_nice_yaml(indent=2) }}"
+    dest: /home/ansible/.homeassistant/configuration.yaml
+    mode: 0644
+    owner: ansible
+    group: ansible
+  notify: reload_hass
+  tags:
+  - home_assistant
+
+- name: Set up systemd service for home assistant
+  copy:
+    content: |
+      [Unit]
+      Description=Home Assistant
+      After=network.target
+
+      [Service]
+      Type=simple
+      WorkingDirectory=/home/ansible
+      ExecStart=/home/ansible/.local/bin/hass
+      User=ansible
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/hass.service
+  notify:
+    - reload_systemd
+    - reload_hass
+  tags:
+  - home_assistant
+
+- name: Start and enable home assistant
+  service:
+    name: hass
+    state: started
+    enabled: yes
+  tags:
+  - home_assistant

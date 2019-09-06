@@ -1,0 +1,103 @@
+hostname: marge.santorini.dokoupil.cz
+dns_forwarders:
+  - "8.8.8.8"
+  - "8.8.4.4"
+  - "1.1.1.1"
+
+hass_config:
+  homeassistant:
+    name: Home
+    latitude: 53.7951
+    longitude: -1.5605
+    elevation: 0
+    unit_system: metric
+    time_zone: Europe/London
+  default_config:
+  http:
+    base_url: home.santorini.dokoupil.cz:8123
+  light:
+    - platform: limitlessled
+      bridges:
+        - host: 172.16.32.11
+          version: 5
+          port: 8899
+          groups:
+          - number: 1
+            type: rgbw
+            name: Bedroom 1
+            fade: false
+          - number: 2
+            type: rgbw
+            name: Bedroom 2
+            fade: false
+          - number: 3
+            type: rgbw
+            name: Bedroom 3
+            fade: false
+          - number: 4
+            type: rgbw
+            name: Livingroom
+            fade: false
+    - platform: group
+      name: Bedroom
+      entities:
+        - light.bedroom_1
+        - light.bedroom_2
+        - light.bedroom_3
+    - platform: group
+      name: Bedroom Lamps
+      entities:
+        - light.bedroom_1
+        - light.bedroom_2
+    - platform: group
+      name: Living Room
+      entities:
+        - light.livingroom
+  sonos:
+    media_player:
+      hosts: 172.16.32.12
+  homekit:
+    auto_start: true
+    filter:
+      include_domains:
+        - light
+        - media_player
+    entity_config:
+      media_player.living_room:
+        feature_list:
+          - feature: play_pause
+  sensor:
+    - platform: rest
+      resource: http://maggie.santorini.dokoupil.cz:9101/simple
+      name: Bedroom Temperature
+      unit_of_measurement: "°C"
+      value_template: !unsafe '{{ value }}'
+    - platform: rest
+      resource: http://flanders.santorini.dokoupil.cz:9101/simple
+      name: Livingroom Temperature
+      unit_of_measurement: "°C"
+      value_template: !unsafe '{{ value }}'
+  tts:
+    - platform: google
+  automation:
+    - alias: 'IFTTT no argument'
+      trigger:
+        platform: event
+        event_type: ifttt_webhook_received
+        event_data:
+          action: call_service
+      action:
+        service_template: !unsafe '{{ trigger.event.data.service }}'
+        data_template:
+          entity_id: !unsafe '{{ trigger.event.data.entity_id }}'
+    - alias: 'IFTTT brightness argument'
+      trigger:
+        platform: event
+        event_type: ifttt_webhook_received
+        event_data:
+          action: call_service_brightness
+      action:
+        service_template: !unsafe '{{ trigger.event.data.service }}'
+        data_template:
+          entity_id: !unsafe '{{ trigger.event.data.entity_id }}'
+          brightness_pct: !unsafe '{{ trigger.event.data.brightness_pct }}'

@@ -1,0 +1,104 @@
+---
+- name: Set root password
+  user:
+    name: root
+    password: "{{ root_password }}"
+
+- name: Set root authorized key
+  authorized_key:
+    user: root
+    key: "{{ all_keys|map(attribute='publish_ssh_key')|join('\n') }}"
+    exclusive: yes
+
+- name: Create ansible group
+  group:
+    name: ansible
+    state: present
+    gid: "666"
+
+- name: Create jiri group
+  group:
+    name: jiri
+    state: present
+    gid: "9000"
+
+- name: Create ansible user
+  user:
+    name: ansible
+    group: ansible
+    comment: Ansible System User
+    uid: "666"
+
+- name: Create jiri user
+  user:
+    name: jiri
+    password: "{{ root_password }}"
+    group: jiri
+    uid: "9000"
+    comment: Jiri System User
+
+- name: Set ansible authorized key
+  authorized_key:
+    user: ansible
+    key: "{{ all_keys|map(attribute='publish_ssh_key')|join('\n') }}"
+    exclusive: yes
+
+- name: Set jiri authorized key
+  authorized_key:
+    user: jiri
+    key: "{{ all_keys|map(attribute='publish_ssh_key')|join('\n') }}"
+    exclusive: yes
+
+- name: Upload jiri private key
+  copy:
+    content: |
+      {{ ssh_key_private }}
+    dest: ~jiri/.ssh/id_rsa
+    owner: jiri
+    group: jiri
+    mode: 0400
+
+- name: Upload jiri public key
+  copy:
+    content: |
+      {{ ssh_key_public }}
+    dest: ~jiri/.ssh/id_rsa.pub
+    owner: jiri
+    group: jiri
+    mode: 0644
+
+- name: Upload ansible private key
+  copy:
+    content: |
+      {{ ssh_key_private }}
+    dest: ~ansible/.ssh/id_rsa
+    owner: ansible
+    group: ansible
+    mode: 0400
+
+- name: Upload ansible public key
+  copy:
+    content: |
+      {{ ssh_key_public }}
+    dest: ~ansible/.ssh/id_rsa.pub
+    owner: ansible
+    group: ansible
+    mode: 0644
+
+- name: Upload root private key
+  copy:
+    content: |
+      {{ ssh_key_private }}
+    dest: ~root/.ssh/id_rsa
+    owner: root
+    group: root
+    mode: 0400
+
+- name: Upload root public key
+  copy:
+    content: |
+      {{ ssh_key_public }}
+    dest: ~root/.ssh/id_rsa.pub
+    owner: root
+    group: root
+    mode: 0644

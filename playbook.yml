@@ -1,0 +1,62 @@
+---
+
+- hosts: hosting
+  become: yes
+  roles:
+    - common
+    - docker
+    - file_sharing
+    - temperature
+
+- hosts: flowers
+  become: yes
+  roles:
+    - common
+    - temperature
+    - reboot
+    - flowers
+
+- hosts: visual
+  become: yes
+  roles:
+    - common
+    - grafana_visual
+    - reboot
+
+- hosts: nas
+  become: yes
+  roles:
+    - common
+    - docker
+    - file_sharing
+    - fan_control
+
+- hosts: rpi
+  become: yes
+  roles:
+    - dns
+    - common
+    - snmp
+    - fan_control
+    - home_assistant
+    - reboot
+
+- hosts: temp
+  become: yes
+  roles:
+    - common
+    - temperature
+    - reboot
+
+- hosts: temp_baro
+  become: yes
+  roles:
+    - common
+    - temperature
+    - barometer
+    - reboot
+
+- hosts: vps
+  become: yes
+  roles:
+    - common

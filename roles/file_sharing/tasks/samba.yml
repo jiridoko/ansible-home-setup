@@ -1,0 +1,73 @@
+---
+- name: Install Samba
+  package:
+    state: present
+    name:
+    - "samba"
+  tags:
+  - share
+
+- name: Create share directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: 0777
+    owner: jiri
+    group: jiri
+  loop: "{{ samba.shares }}"
+  tags:
+  - share
+
+- name: Create log directory
+  file:
+    state: directory
+    path: "{{ samba.log_dir }}"
+    mode: 0755
+    owner: jiri
+    group: jiri
+  tags:
+  - share
+
+- name: Set Samba config
+  template:
+    src: samba.j2
+    dest: /etc/samba/smb.conf
+  notify: restart samba
+  tags:
+  - share
+
+- name: Set Samba PAM
+  copy:
+    content: |
+      auth requisite pam_nologin.so
+      auth require pam_unix.so
+    dest: /etc/pam.d/samba
+  notify: restart samba
+  tags:
+  - share
+
+- name: Create/update Samba users with the passwords
+  shell: >
+    (echo '{{ item.password }}'; echo '{{ item.password }}') \
+    | smbpasswd -s -a {{ item.name }}
+  with_items: "{{ samba_users }}"
+  no_log: true
+  become_user: root
+  tags:
+  - share
+
+- name: Start and enable samba
+  service:
+    name: smb
+    state: started
+    enabled: yes
+  tags:
+  - share
+
+- name: Start and enable nmb
+  service:
+    name: nmb
+    state: started
+    enabled: yes
+  tags:
+  - share

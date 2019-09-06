@@ -1,0 +1,67 @@
+// vim:set ts=4 sw=4 et:
+
+options {
+    directory "/var/named";
+    pid-file "/run/named/named.pid";
+
+    // Uncomment these to enable IPv6 connections support
+    // IPv4 will still work:
+    //  listen-on-v6 { any; };
+    // Add this for no IPv4:
+    //  listen-on { none; };
+
+    forwarders {
+        {% for server in dns_forwarders %}
+        {{ server }};
+        {% endfor %}
+    };
+
+    allow-recursion { any; };
+    allow-transfer { none; };
+    //allow-update { none; };
+    allow-query { any; };
+    dnssec-enable no;
+    dnssec-validation no;
+    dnssec-lookaside no;
+
+    version none;
+    hostname "{{ ansible_fqdn }}";
+    server-id none;
+};
+
+zone "localhost" IN {
+    type master;
+    file "localhost.zone";
+};
+
+zone "0.0.127.in-addr.arpa" IN {
+    type master;
+    file "127.0.0.zone";
+};
+
+zone "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa" {
+    type master;
+    file "localhost.ip6.zone";
+};
+
+zone "255.in-addr.arpa" IN {
+    type master;
+    file "empty.zone";
+};
+
+zone "0.in-addr.arpa" IN {
+    type master;
+    file "empty.zone";
+};
+
+zone "." IN {
+    type hint;
+    file "root.hint";
+};
+
+{% for zone in domains %}
+zone "{{ zone.name }}" IN {
+    type master;
+    file "/var/named/{{ zone.name }}.zone";
+};
+{% endfor %}

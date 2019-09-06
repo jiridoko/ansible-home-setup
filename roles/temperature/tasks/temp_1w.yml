@@ -1,0 +1,127 @@
+---
+- name: Enable one wire
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: "^#?dtoverlay"
+    line: "dtoverlay=w1-gpio"
+    state: present
+  register: boot_config
+  tags:
+  - temp
+
+- name: Reboot
+  reboot:
+    reboot_timeout: 300
+  when: boot_config.changed
+  tags:
+  - temp
+
+- name: Install dependencies
+  package:
+    state: present
+    name:
+    - "python-flask"
+    - "python-pip"
+  tags:
+  - temp
+
+- name: Create the python script
+  copy:
+    content: |
+      #!/usr/bin/env python3
+      from flask import Flask
+      import subprocess
+      import sys
+      import os
+      import time
+      from threading import Thread
+      
+      app = Flask(__name__)
+      
+      global NAME
+      NAME="{{ temp_location }}"
+
+      global temp_sensor
+      temp_sensor="/sys/bus/w1/devices/{{ temp_device }}/w1_slave"
+      
+      global temp
+      temp="0.0"
+      
+      def updater():
+          while True:
+              update_temp()
+              time.sleep(1)
+
+      def temp_raw():
+          global temp_sensor
+          with open(temp_sensor, 'r') as f:
+              return f.readlines()
+
+      def update_temp():
+          global temp
+          lines = temp_raw()
+          while lines[0].strip()[-3:] != 'YES':
+              time.sleep(0.2)
+              lines = temp_raw()
+          temp_output = lines[1].find('t=')
+          if temp_output != -1:
+              temp_string = lines[1].strip()[temp_output+2:]
+              temp = str(float(temp_string) / 1000.0)
+      
+      @app.route('/metrics')
+      def get_temp():
+          global temp
+          global NAME
+          return "custom_temperature{location=\""+NAME+"\"} "+temp
+
+      @app.route('/simple')
+      def get_simple_temp():
+          global temp
+          return temp
+      
+      if __name__ == '__main__':
+          t = Thread(target=updater)
+          update_temp()
+          t.start()
+          app.run(debug=False, port=9101, host="0.0.0.0")
+    dest: /opt/temp.py
+    mode: 0755
+    owner: root
+    group: root
+  notify:
+  - restart temp
+  tags:
+  - temp
+
+- name: Create the systemd service
+  copy:
+    content: |
+      [Unit]
+      Description=Custom Temperature sensor
+      After=network.target
+
+      [Service]
+      Type=simple
+      WorkingDirectory=/root
+      ExecStart=/opt/temp.py
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/temp.service
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+  - reload systemd
+  - restart temp
+  tags:
+  - temp
+
+- name: Start and enable the temp service
+  service:
+    name: temp
+    state: started
+    enabled: yes
+  tags:
+  - temp

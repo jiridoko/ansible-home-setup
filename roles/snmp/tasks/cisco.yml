@@ -1,0 +1,44 @@
+---
+- name: Install dependencies
+  package:
+    state: present
+    name:
+    - "python-paramiko"
+    - "python-flask"
+  tags:
+  - snmp
+
+- name: Install the custom cisco metrics exporter
+  template:
+    src: cisco_exporter.j2
+    dest: "/home/ansible/cisco_exporter.py"
+    owner: ansible
+    group: ansible
+    mode: 0555
+  vars:
+    dest_hostname: "moe.santorini.dokoupil.cz"
+    dest_username: "ansible"
+  become_user: ansible
+  tags:
+  - snmp
+
+- name: Install the custom cisco metrics service
+  template:
+    src: systemd.service.j2
+    dest: /etc/systemd/system/cisco_metrics.service
+  vars:
+    description: "Custom Cisco metrics exporter"
+    after: "network.target"
+    cwd: "/home/ansible"
+    startcmd: "/home/ansible/cisco_exporter.py"
+  notify: reload systemd
+  tags:
+  - snmp
+
+- name: Start and enable the custom cisco exporter
+  service:
+    name: cisco_metrics
+    state: started
+    enabled: yes
+  tags:
+  - snmp

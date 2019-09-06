@@ -1,0 +1,12 @@
+---
+- name:
+  package:
+    state: present
+    name:
+    - "prometheus-node-exporter"
+
+- name: Enable prometheus node exporter service
+  service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes

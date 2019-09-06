@@ -1,0 +1,15 @@
+---
+- include_tasks: "temp_v1.yml"
+  when: temp_version == "v1"
+  tags:
+  - temp
+
+- include_tasks: "temp_v2.yml"
+  when: temp_version == "v2"
+  tags:
+  - temp
+
+- include_tasks: "temp_1w.yml"
+  when: temp_version == "1w"
+  tags:
+  - temp

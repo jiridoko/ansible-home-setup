@@ -1,0 +1,35 @@
+---
+- name: Install minidlna
+  package:
+    state: present
+    name:
+    - "minidlna"
+  tags:
+  - share
+
+- name: Create share directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: 0777
+    owner: jiri
+    group: jiri
+  loop: "{{ dlna.shares }}"
+  tags:
+  - share
+
+- name: Set minidlna config
+  template:
+    src: minidlna.j2
+    dest: /etc/minidlna.conf
+  notify: restart minidlna
+  tags:
+  - share
+
+- name: Start and enable minidlna
+  service:
+    name: minidlna
+    state: started
+    enabled: yes
+  tags:
+  - share

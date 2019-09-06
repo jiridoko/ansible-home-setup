@@ -1,0 +1,45 @@
+---
+- name: Create the github file
+  copy:
+    content: |
+      user: {{ github_user }}
+      token: {{ github_token }}
+    owner: jiri
+    group: jiri
+    dest: /home/jiri/github_token
+
+- name: Set global git email
+  git_config:
+    name: user.email
+    value: "{{ git_email | default(git_personal_email) }}"
+    scope: system
+
+- name: Set global git name
+  git_config:
+    name: user.name
+    value: "{{ git_name | default(git_personal_name) }}"
+    scope: system
+
+- name: Create switching script for personal git
+  copy:
+    content: |
+      #!/bin/bash
+      if [ "$1" == "personal" ]; then
+          git config --global user.name "{{ git_personal_name }}"
+          git config --global user.email "{{ git_personal_email }}"
+      elif [ "$1" == "work" ]; then
+          git config --global user.name "{{ git_work_name }}"
+          git config --global user.email "{{ git_work_email }}"
+      elif [ "$1" == "fix" -a "$2" == "personal" ]; then
+          git commit --amend --author="{{ git_personal_name }} <{{ git_personal_email }}>"
+      elif [ "$1" == "fix" -a "$2" == "work" ]; then
+          git commit --amend --author="{{ git_work_name }} <{{ git_work_email }}>"
+      fi
+    dest: "~{{ item }}/bin/git_set.sh"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0755
+  loop:
+    - "root"
+    - "jiri"
+    - "ansible"

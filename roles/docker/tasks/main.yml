@@ -1,0 +1,46 @@
+---
+- name: Install docker and docker-compose
+  package:
+    state: present
+    name:
+    - "docker"
+    - "docker-compose"
+  tags:
+  - docker
+
+- name: Enable docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  tags:
+  - docker
+
+- name: Set vm.max_map_count
+  copy:
+    content: |
+      vm.max_map_count=262144
+    dest: /etc/sysctl.d/90-docker.conf
+  notify: reload sysctl
+  tags:
+  - docker
+
+- name: Create docker swarm
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ ansible_default_ipv4.address }}"
+    listen_addr: "{{ ansible_default_ipv4.address }}"
+  register: swarm
+  when: hostname == "lisa.santorini.dokoupil.cz"
+  tags:
+  - docker
+
+- name: Join docker swarm
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ ansible_default_ipv4.address }}"
+    join_token: "{{ hostvars['lisa.santorini.dokoupil.cz'].swarm.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs: "{{ [hostvars['lisa.santorini.dokoupil.cz'].ansible_default_ipv4.address] }}"
+  when: hostname != "lisa.santorini.dokoupil.cz"
+  tags:
+  - docker

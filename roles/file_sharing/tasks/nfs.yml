@@ -1,0 +1,41 @@
+---
+- name: Install NFS Server
+  package:
+    state: present
+    name:
+    - "nfs-utils"
+  tags:
+  - share
+
+- name: Create NFS share directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: 0777
+    owner: jiri
+    group: jiri
+  loop: "{{ nfs.shares }}"
+  tags:
+  - share
+
+- name: Define NFS exports
+  template:
+    src: exports.nfs.j2
+    dest: /etc/exports
+  register: nfs_exports
+  tags:
+  - share
+
+- name: Export NFS exports
+  command: exportfs -rav
+  when: nfs_exports.changed == 1
+  tags:
+  - share
+
+- name: Enable and start the NFS server
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+  tags:
+  - share

@@ -1,0 +1,20 @@
+---
+- include_tasks: "afp.yml"
+  tags:
+  - share
+
+- include_tasks: "minidlna.yml"
+  tags:
+  - share
+
+- include_tasks: "samba.yml"
+  tags:
+  - share
+
+- include_tasks: "nfs.yml"
+  tags:
+  - share
+
+- include_tasks: "avahi.yml"
+  tags:
+  - share

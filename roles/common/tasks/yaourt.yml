@@ -1,0 +1,68 @@
+---
+- name: Check if package-query is installed
+  command: pacman -Qi package-query
+  register: package_query_check
+  changed_when: package_query_check.rc == 1
+  failed_when: package_query_check.rc not in [0,1]
+  when: ansible_distribution == "Archlinux"
+
+- name: Check if yaourt is installed
+  command: pacman -Qi yaourt
+  register: yaourt_check
+  changed_when: yaourt_check.rc == 1
+  failed_when: yaourt_check.rc not in [0,1]
+  when: ansible_distribution == "Archlinux"
+
+- name: Download package-query
+  command: git clone https://aur.archlinux.org/package-query.git
+  args:
+    chdir: "~{{ yaourt_user }}/"
+  register: download_package_query
+  become_user: "{{ yaourt_user }}"
+  when:
+    - ansible_distribution == "Archlinux"
+    - package_query_check.rc != 0
+
+- name: Install package-query
+  command: makepkg -si --noconfirm
+  args:
+    chdir: "~{{ yaourt_user }}/package-query"
+  become_user: "{{ yaourt_user }}"
+  when:
+    - ansible_distribution == "Archlinux"
+    - package_query_check.rc != 0
+
+- name: Remove previous package-query directories
+  file:
+    state: absent
+    path: "~{{ yaourt_user }}/package-query"
+  when:
+    - ansible_distribution == "Archlinux"
+    - package_query_check.rc != 0
+
+- name: Download yaourt
+  command: git clone https://aur.archlinux.org/yaourt.git
+  args:
+    chdir: "~{{ yaourt_user }}/"
+  become_user: "{{ yaourt_user }}"
+  when: 
+    - ansible_distribution == "Archlinux"
+    - yaourt_check.rc != 0
+
+- name: Install yaourt
+  command: makepkg -si --noconfirm
+  args:
+    chdir: "~{{ yaourt_user }}/yaourt"
+  become_user: "{{ yaourt_user }}"
+  when:
+    - ansible_distribution == "Archlinux"
+    - yaourt_check.rc != 0
+
+- name: Remove previous yaourt directories
+  file:
+    state: absent
+    path: "~{{ yaourt_user }}/yaourt"
+  when:
+    - ansible_distribution == "Archlinux"
+    - yaourt_check.rc != 0
+

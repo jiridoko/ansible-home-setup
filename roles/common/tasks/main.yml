@@ -1,0 +1,16 @@
+---
+- name: Set hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- include_tasks: "users.yml"
+- include_tasks: "ssh.yml"
+- include_tasks: "packages.yml"
+- include_tasks: "node_exporter.yml"
+- include_tasks: "sudo.yml"
+- include_tasks: "yaourt.yml"
+- include_tasks: "vim.yml"
+- include_tasks: "pacman.yml"
+- include_tasks: "environment.yml"
+- include_tasks: "ntp.yml"
+- include_tasks: "git.yml"

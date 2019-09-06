@@ -1,0 +1,87 @@
+---
+- name: Install dev tools
+  package:
+    state: present
+    name:
+    - "vim"
+    - "base-devel"
+    - "time"
+    - "python2"
+    - "htop"
+    - "subversion"
+    - "asciidoc"
+    - "bash"
+    - "bc"
+    - "binutils"
+    - "bzip2"
+    - "fastjar"
+    - "flex"
+    - "git"
+    - "gcc" 
+    - "util-linux"
+    - "gawk"
+    - "maven"
+    - "intltool"
+    - "zlib"
+    - "make"
+    - "cdrkit"
+    - "ncurses"
+    - "openssl"
+    - "patch"
+    - "perl-extutils-makemaker"
+    - "rsync"
+    - "unzip"
+    - "wget"
+    - "gettext"
+    - "libxslt"
+    - "boost"
+    - "libusb"
+    - "bin86"
+    - "sharutils"
+    - "b43-fwcutter"
+    - "findutils"
+    - "gperf"
+    - "gperftools"
+    - "python"
+    - "python-pip"
+    - "python-setuptools"
+    - "python-cryptography"
+    - "help2man"
+    - "dnsutils"
+    - "net-tools"
+    - "ansible"
+    - "ansible-lint"
+
+- name: Create a symlink to home directory
+  file:
+    state: link
+    src: "/vagrant_home/"
+    dest: "/home/jiri/home"
+    owner: jiri
+    group: jiri
+
+- name: Create a symlink to the .vaultp file
+  file:
+    state: link
+    src: "/vagrant_home/.vaultp"
+    dest: "/home/jiri/.vaultp"
+    owner: jiri
+    group: jiri
+
+- name: Create .m2 directory
+  file:
+    state: directory
+    dest: "/home/jiri/.m2"
+    owner: jiri
+    group: jiri
+    mode: 0755
+
+- name: Plant the settings.xml file
+  copy:
+    content: "{{ mvn_config }}"
+    dest: "/home/jiri/.m2/settings.xml"
+    owner: jiri
+    group: jiri
+    mode: 0644
+
+- include_tasks: "vpn_client.yml"

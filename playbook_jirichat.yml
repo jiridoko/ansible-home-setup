@@ -1,0 +1,8 @@
+---
+
+- hosts: jirichat
+  debugger: on_failed
+  become: yes
+  roles:
+    - common
+    - rocketchat

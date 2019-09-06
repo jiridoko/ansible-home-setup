@@ -1,0 +1,34 @@
+---
+- name: Install NTP
+  package:
+    state: present
+    name:
+    - "ntp"
+
+- name: Set the NTP config
+  copy:
+    content: |
+      server 0.europe.pool.ntp.org iburst
+      server 1.europe.pool.ntp.org iburst
+      server 2.europe.pool.ntp.org iburst
+      server 3.europe.pool.ntp.org iburst
+      restrict default kod limited nomodify nopeer noquery notrap
+      restrict 127.0.0.1
+      restrict ::1
+      driftfile /var/lib/ntp/ntp.drift
+    dest: /etc/ntp.conf
+  notify: restart ntpd
+
+- name: Start and enable the NTP daemon
+  service:
+    name: ntpd
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Archlinux"
+
+- name: Start and enable the NTP daemon
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Ubuntu"

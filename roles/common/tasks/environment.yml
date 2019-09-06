@@ -1,0 +1,55 @@
+---
+- name: Set timezone
+  file:
+    state: link
+    src: "{{ local_timezone }}"
+    dest: /etc/localtime
+
+- name: Enable locale
+  locale_gen:
+    state: present
+    name: "{{ item }}"
+  loop:
+  - en_US.UTF-8
+  - en_GB.UTF-8
+
+- name: Set locale
+  copy:
+    content: |
+        LANG=en_US.UTF-8
+        LC_TIME=en_GB.UTF-8
+        LC_MONETARY=en_GB.UTF-8
+        LC_NUMERIC=en_GB.UTF-8
+        LC_ALL=en_US.UTF-8
+    dest: /etc/locale.conf
+
+- name: Set vconsole keyboard
+  copy:
+    content: "KEYMAP=us\n"
+    dest: /etc/vconsole.conf
+
+- name: Set MOTD
+  copy:
+    content: |
+        Welcome to {{ hostname }}
+    dest: /etc/motd
+
+- name: Set bashrc
+  template:
+    src: bashrc.j2
+    dest: /etc/bash.bashrc
+    owner: root
+    group: root
+    mode: "644"
+
+- name: Create user bin directories
+  file:
+    state: directory
+    dest: "~{{ item }}/bin"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0755
+  loop:
+    - "root"
+    - "jiri"
+    - "ansible"

@@ -1,0 +1,18 @@
+[Global]
+ mimic model = {{ afp.mimic_model }}
+ log level = default:warn
+ log file = /var/log/afpd.log
+ admin group = {{ afp.admin_group }}
+ hosts allow = {{ afp.hosts_allow }}
+
+[Homes]
+ basedir regex = /home
+
+{% for i in afp.shares %}
+[{{ i.name }}]
+ path = {{ i.path }}
+ valid users = {{ i.users }}
+{% if i.timemachine %}
+ time machine = yes
+{% endif %}
+{% endfor %}

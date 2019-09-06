@@ -1,0 +1,16 @@
+---
+- name: Sudo for ansible
+  copy:
+    content: "ansible ALL=(ALL) NOPASSWD: ALL\n"
+    dest: /etc/sudoers.d/ansible
+
+- name: Sudo for jiri
+  copy:
+    content: "jiri ALL=(ALL) NOPASSWD: ALL\n"
+    dest: /etc/sudoers.d/jiri
+
+- name: Sudo for vagrant
+  copy:
+    content: "vagrant ALL=(ALL) NOPASSWD: ALL\n"
+    dest: /etc/sudoers.d/vagrant
+  when: hostname == "jiridev"

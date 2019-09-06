@@ -1,0 +1,63 @@
+---
+- name: Install go and other tools
+  package:
+    state: present
+    name:
+    - "go"
+    - "net-snmp"
+  tags:
+  - snmp
+
+- name: Check if we need to rebuild
+  command: ls go/src/github.com/prometheus/snmp_exporter/snmp_exporter
+  register: snmp_check
+  changed_when: snmp_check.rc == 1
+  failed_when: snmp_check.rc not in [0,1]
+  tags:
+  - snmp
+
+- name: Clone the snmp_exporter repo
+  command: go get github.com/prometheus/snmp_exporter/generator
+  become_user: ansible
+  when: snmp_check.rc == 1
+  tags:
+  - snmp
+
+- name: Build snmp_exporter generator
+  command: go build
+  args:
+    chdir: go/src/github.com/prometheus/snmp_exporter/generator
+  when: snmp_check.rc == 1
+  become_user: ansible
+  tags:
+  - snmp
+
+- name: Build snmp_exporter
+  command: go build
+  args:
+    chdir: go/src/github.com/prometheus/snmp_exporter
+  when: snmp_check.rc == 1
+  become_user: ansible
+  tags:
+  - snmp
+
+- name: Install SNMP exporter systemd service file
+  template:
+    src: systemd.service.j2
+    dest: /etc/systemd/system/snmp_exporter.service
+  vars:
+    description: "SNMP exporter"
+    after: "network.target"
+    cwd: "/home/ansible/go/src/github.com/prometheus/snmp_exporter"
+    startcmd: "/home/ansible/go/src/github.com/prometheus/snmp_exporter/snmp_exporter"
+  notify: reload systemd
+  tags:
+  - snmp
+
+- name: Start and enable the snmp exporter
+  service:
+    name: snmp_exporter
+    state: started
+    enabled: yes
+  tags:
+  - snmp

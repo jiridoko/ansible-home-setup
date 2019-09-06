@@ -1,0 +1,7 @@
+---
+- include_tasks: "cisco.yml"
+  tags:
+  - snmp
+- include_tasks: "snmp_exporter.yml"
+  tags:
+  - snmp

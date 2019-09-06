@@ -1,0 +1,100 @@
+---
+- name: Install Avahi
+  package:
+    state: present
+    name:
+    - "avahi"
+    - "nss-mdns"
+    - "libnss_nis"
+  tags:
+  - share
+
+- name: Update nsswitch
+  lineinfile:
+    dest: /etc/nsswitch.conf
+    regexp: "^#?hosts:"
+    line: "hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4 mdns"
+    state: present
+  notify: restart afp
+  tags:
+  - share
+
+- name: Set AFP shares in avahi
+  template:
+    src: avahi.afp.j2
+    dest: /etc/avahi/services/afpd.service
+  notify: restart avahi
+  when: afp.announce is defined and afp.announce == true
+  tags:
+  - share
+
+- name: Remove AFP shares in avahi
+  file:
+    state: absent
+    path: /etc/avahi/services/afpd.service
+  notify: restart avahi
+  when: afp.announce == false
+  tags:
+  - share
+
+- name: Set SMB shares in avahi
+  template:
+    src: avahi.smb.j2
+    dest: /etc/avahi/services/smbd.service
+  notify: restart avahi
+  when: samba.announce is defined and samba.announce == true
+  tags:
+  - share
+
+- name: Remove SMB shares in avahi
+  file:
+    state: absent
+    path: /etc/avahi/services/smbd.service
+  notify: restart avahi
+  when: samba.announce == false
+  tags:
+  - share
+
+- name: Set Avahi hostname
+  lineinfile:
+    dest: /etc/avahi/avahi-daemon.conf
+    regexp: "^#?host-name"
+    line: "host-name={{ hostname.split('.')[0] | lower }}"
+    state: present
+  notify: restart avahi
+  tags:
+  - share
+
+- name: Set Avahi publishing
+  lineinfile:
+    dest: /etc/avahi/avahi-daemon.conf
+    regexp: "^#?publish-hinfo"
+    line: "publish-hinfo=yes"
+    state: present
+  notify: restart avahi
+  tags:
+  - share
+
+- name: Set Avahi dbus policy
+  template:
+    src: avahi-dbus.j2
+    dest: /etc/dbus-1/system.d/avahi-dbus.conf
+  register: avahi_dbus
+  tags:
+  - share
+
+- name: Restart dbus
+  service:
+    name: dbus
+    state: restarted
+  when: avahi_dbus.changed
+  tags:
+  - share
+
+- name: Start and enable Avahi
+  service:
+    name: avahi-daemon
+    state: started
+    enabled: yes
+  tags:
+  - share

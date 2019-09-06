@@ -1,0 +1,43 @@
+---
+- name: Check for netatalk
+  command: pacman -Qi netatalk
+  register: netatalk_check
+  changed_when: netatalk_check.rc == 1
+  failed_when: netatalk_check.rc not in [0,1]
+  tags:
+  - share
+
+- name: Install netatalk
+  command: yaourt --noconfirm -S netatalk
+  become_user: ansible
+  when: netatalk_check.rc == 1
+  tags:
+  - share
+
+- name: Create share directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: 0777
+    owner: jiri
+    group: jiri
+  loop: "{{ afp.shares }}"
+  tags:
+  - share
+
+- name: Set the afp config file
+  template:
+    src: afp.j2
+    dest: /etc/afp.conf
+  notify: restart afp
+  tags:
+  - share
+
+- name: Start and Enable the apple file sharing service
+  service:
+    name: netatalk
+    state: started
+    enabled: yes
+  tags:
+  - share
+

@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+from paramiko import *
+import re
+from flask import Flask
+
+app = Flask(__name__)
+
+client = SSHClient()
+client.load_system_host_keys()
+client.set_missing_host_key_policy(AutoAddPolicy())
+client.connect('{{ dest_hostname }}', username="{{ dest_username }}")
+def get_values():
+        stdin, stdout, stderr = client.exec_command('show env')
+        output = stdout.read().decode('utf-8')
+        intake_right_re = r"Intake Right temperature: \d*"
+        intake_user_re = r"Intake User temperature: \d*"
+        exhaust_fan_re = r"Exhaust Fan temperature: \d*"
+        intake_right_bezel_re = r"Intake Right\(Bezel\) temperature: \d*"
+        power_consumption_re = r"Total System Power consumption is: \d*\.\d*"
+        val1 = None
+        val2 = None
+        val3 = None
+        val4 = None
+        val5 = None
+        matches = re.finditer(intake_right_re, output, re.MULTILINE)
+        for matchNum, match in enumerate(matches, start=1):
+                val1 = match.group().split()[-1]
+        matches = re.finditer(intake_user_re, output, re.MULTILINE)
+        for matchNum, match in enumerate(matches, start=1):
+                val2 = match.group().split()[-1]
+        matches = re.finditer(exhaust_fan_re, output, re.MULTILINE)
+        for matchNum, match in enumerate(matches, start=1):
+                val3 = match.group().split()[-1]
+        matches = re.finditer(intake_right_bezel_re, output, re.MULTILINE)
+        for matchNum, match in enumerate(matches, start=1):
+                val4 = match.group().split()[-1]
+        matches = re.finditer(power_consumption_re, output, re.MULTILINE)
+        for matchNum, match in enumerate(matches, start=1):
+                val5 = match.group().split()[-1]
+        return (val1, val2, val3, val4, val5)
+
+@app.route('/metrics')
+def metrics():
+        val1, val2, val3, val4, val5 = get_values()
+        ret = ""
+        ret += "cisco_custom_monitor{type=\"intake_right\"} "+str(val1)+"\n"
+        ret += "cisco_custom_monitor{type=\"intake_user\"} "+str(val2)+"\n"
+        ret += "cisco_custom_monitor{type=\"exhaust\"} "+str(val3)+"\n"
+        ret += "cisco_custom_monitor{type=\"intake_right_bezel\"} "+str(val4)+"\n"
+        ret += "cisco_custom_monitor{type=\"power_consumption\"} "+str(val5)
+        return ret
+
+if __name__ == '__main__':
+        app.run(debug=False, port=9117, host="0.0.0.0")

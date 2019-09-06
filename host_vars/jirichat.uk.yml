@@ -1,0 +1,4 @@
+hostname: jirichat.uk
+local_timezone: /usr/share/zoneinfo/Europe/London
+vimrc: "/etc/vim/vimrc"
+rocket_chat_mongodb_service_name: "mongodb"
