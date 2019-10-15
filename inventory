@@ -36,3 +36,6 @@ marge.santorini.dokoupil.cz #ansible_user=alarm
 
 [vps]
 czenda.dokoupil.cz #ansible_user=root
+
+[workstation]
+milhouse.santorini.dokoupil.cz #ansible_user=root

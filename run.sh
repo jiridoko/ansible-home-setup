@@ -34,6 +34,8 @@ elif [ "$1" == "flowers" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t flowers
 elif [ "$1" == "jirichat" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook_jirichat.yml -l jirichat
+elif [ "$1" == "workstation" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l workstation
 elif [ "$1" == "baro" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t barometer
 elif [ "$1" == "req" ]; then
