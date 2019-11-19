@@ -1,5 +1,10 @@
 ---
 
+- hosts: jiri-iris
+  become: yes
+  roles:
+    - common
+
 - hosts: hosting
   become: yes
   roles:

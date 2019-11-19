@@ -53,18 +53,18 @@
   - root
   when: ansible_distribution == "Archlinux"
 
-- name: download the new python syntax for vim
-  get_url:
-    url: https://raw.githubusercontent.com/wmvanvliet/vim-blackboard/master/syntax/python.vim
-    dest: "~{{ item }}/.vim/syntax"
-    mode: 0644
-    owner: "{{ item }}"
-    group: "{{ item }}"
-  loop:
-  - jiri
-  - ansible
-  - root
-  when: ansible_distribution == "Archlinux"
+  #- name: download the new python syntax for vim
+  #  get_url:
+  #    url: https://raw.githubusercontent.com/wmvanvliet/vim-blackboard/master/syntax/python.vim
+  #    dest: "~{{ item }}/.vim/syntax"
+  #    mode: 0644
+  #    owner: "{{ item }}"
+  #    group: "{{ item }}"
+  #  loop:
+  #  - jiri
+  #  - ansible
+  #  - root
+  #  when: ansible_distribution == "Archlinux"
 
 - name: set the vim truecolors
   lineinfile:

@@ -3,7 +3,7 @@
 if [ -z "$1" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml
 elif [ "$1" == "edit" ]; then
-	EDITOR=vim ansible-vault --vault-password-file ~/.vaultp edit group_vars/all.yml
+	EDITOR=vim ansible-vault edit --vault-password-file ~/.vaultp group_vars/all.yml
 elif [ "$1" == "update-extra" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml --extra-vars "update_system=true"
 elif [ "$1" == "update" ]; then
@@ -36,6 +36,8 @@ elif [ "$1" == "jirichat" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook_jirichat.yml -l jirichat
 elif [ "$1" == "workstation" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l workstation
+elif [ "$1" == "iris" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l jiri-iris -vvv
 elif [ "$1" == "baro" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t barometer
 elif [ "$1" == "req" ]; then

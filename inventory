@@ -39,3 +39,6 @@ czenda.dokoupil.cz #ansible_user=root
 
 [workstation]
 milhouse.santorini.dokoupil.cz #ansible_user=root
+
+[jiri-iris]
+jiri-iris.dokoupil.cz ansible_user=root
