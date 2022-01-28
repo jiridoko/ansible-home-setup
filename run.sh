@@ -26,8 +26,8 @@ elif [ "$1" == "grafana" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t grafana
 elif [ "$1" == "vps" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l vps
-elif [ "$1" == "skinner" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l skinner
+elif [ "$1" == "nas" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l nas
 elif [ "$1" == "hosting" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l hosting
 elif [ "$1" == "req" ]; then
