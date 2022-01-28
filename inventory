@@ -2,7 +2,6 @@
 ansible_user=ansible
 
 [servers:children]
-jirichat
 hosting
 visual
 nas
@@ -10,35 +9,11 @@ rpi
 vps
 temp
 
-[jirichat]
-jirichat.uk ansible_host=95.154.252.83 #ansible_user=root
-
-[temp]
-maggie.santorini.dokoupil.cz #ansible_user=root
-
-[temp_baro]
-flanders.santorini.dokoupil.cz #ansible_user=root
-
-[flowers]
-carl.santorini.dokoupil.cz #ansible_user=root
-
-[hosting]
-lisa.santorini.dokoupil.cz #ansible_user=root
-
-[visual]
-nelson.santorini.dokoupil.cz #ansible_user=root
-
 [nas]
-homer.santorini.dokoupil.cz #ansible_user=root
-
-[rpi]
-marge.santorini.dokoupil.cz #ansible_user=alarm
+homer.sellerdale.com ansible_host=10.85.0.252 #ansible_user=root
 
 [vps]
 czenda.dokoupil.cz #ansible_user=root
 
-[workstation]
-milhouse.santorini.dokoupil.cz #ansible_user=root
-
-[jiri-iris]
-jiri-iris.dokoupil.cz ansible_user=root
+[hosting]
+skinner.sellerdale.com ansible_host=10.85.0.253 ansible_user=root

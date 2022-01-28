@@ -1,3 +1,0 @@
-hostname: nelson.santorini.dokoupil.cz
-grafana_url: https://grafana.santorini.dokoupil.cz/playlists/play/1?kiosk=tv
-systemd_boot: true

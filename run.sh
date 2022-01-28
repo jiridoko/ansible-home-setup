@@ -24,22 +24,12 @@ elif [ "$1" == "packages" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t packages
 elif [ "$1" == "grafana" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t grafana
-elif [ "$1" == "hass" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t home_assistant
-elif [ "$1" == "temp" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t temp
 elif [ "$1" == "vps" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l vps
-elif [ "$1" == "flowers" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t flowers
-elif [ "$1" == "jirichat" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook_jirichat.yml -l jirichat
-elif [ "$1" == "workstation" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l workstation
-elif [ "$1" == "iris" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l jiri-iris -vvv
-elif [ "$1" == "baro" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t barometer
+elif [ "$1" == "skinner" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l skinner
+elif [ "$1" == "hosting" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l hosting
 elif [ "$1" == "req" ]; then
 	ansible-galaxy install -p roles/ -r roles/requirements.yml
 fi

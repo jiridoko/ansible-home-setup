@@ -1,13 +1,13 @@
-hostname: homer.santorini.dokoupil.cz
+hostname: homer.sellerdale.com
 systemd_boot: true
 
 afp:
   hostname: "homer"
   announce: false
-  domain: "santorini.dokoupil.cz"
+  domain: "sellerdale.com"
   mimic_model: "AirPort7,120"
   admin_group: "jiri"
-  hosts_allow: "172.16.32.0/24"
+  hosts_allow: "10.85.0.0/24"
   shares:
     - name: TimeMachine
       path: /mnt/raid/timemachine
@@ -42,35 +42,35 @@ nfs:
   shares:
     - name: Video
       path: /mnt/raid/video
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: Porn
       path: /mnt/raid/porn
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: Music
       path: /mnt/raid/music
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: Pictures
       path: /mnt/raid/pictures
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: General
       path: /mnt/raid/general
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: SSD
       path: /mnt/ssd
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: docker_registry
       path: /mnt/ssd/docker_registry
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: transmission_downloads
       path: /mnt/ssd/transmission_downloads
-      allowed_range: "172.16.32.0/24"
+      allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
 
 dlna:
@@ -98,7 +98,7 @@ samba:
   name: "homer"
   announce: true
   mimic_model: "AirPort7,120"
-  hosts_allow: "172.16.32."
+  hosts_allow: "10.85.0."
   wins_support: "yes"
   logs: "/var/log/samba/log.%m"
   log_dir: "/var/log/samba/"

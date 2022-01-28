@@ -13,32 +13,32 @@
     line: "autocmd FileType yaml setlocal shiftwidth=2"
     state: present
 
-- name: download the kuroi color theme
-  get_url:
-    url: https://raw.githubusercontent.com/aonemd/kuroi.vim/master/colors/kuroi.vim
-    dest: /usr/share/vim/vim81/colors/
-    mode: 0644
-    owner: root
-    group: root
-  when: ansible_distribution == "Archlinux"
-
-- name: download the simo-zz-2 color theme
-  get_url:
-    url: https://raw.githubusercontent.com/gvee-s/simo-zz-2/master/colors/simo-zz-2.vim
-    dest: /usr/share/vim/vim81/colors/
-    mode: 0644
-    owner: root
-    group: root
-  when: ansible_distribution == "Archlinux"
-
-- name: download the blackboard color theme
-  get_url:
-    url: https://raw.githubusercontent.com/wmvanvliet/vim-blackboard/master/colors/blackboard.vim
-    dest: /usr/share/vim/vim81/colors/
-    mode: 0644
-    owner: root
-    group: root
-  when: ansible_distribution == "Archlinux"
+#- name: download the kuroi color theme
+#  get_url:
+#    url: https://raw.githubusercontent.com/aonemd/kuroi.vim/master/colors/kuroi.vim
+#    dest: /usr/share/vim/vim81/colors/
+#    mode: 0644
+#    owner: root
+#    group: root
+#  when: ansible_distribution == "Archlinux"
+#
+#- name: download the simo-zz-2 color theme
+#  get_url:
+#    url: https://raw.githubusercontent.com/gvee-s/simo-zz-2/master/colors/simo-zz-2.vim
+#    dest: /usr/share/vim/vim81/colors/
+#    mode: 0644
+#    owner: root
+#    group: root
+#  when: ansible_distribution == "Archlinux"
+#
+#- name: download the blackboard color theme
+#  get_url:
+#    url: https://raw.githubusercontent.com/wmvanvliet/vim-blackboard/master/colors/blackboard.vim
+#    dest: /usr/share/vim/vim81/colors/
+#    mode: 0644
+#    owner: root
+#    group: root
+#  when: ansible_distribution == "Archlinux"
 
 - name: create the vim syntax folders for all users
   file:
@@ -82,10 +82,10 @@
     state: present
   when: ansible_distribution == "Archlinux"
 
-- name: set the vim colorscheme
-  lineinfile:
-    dest: "{{ vimrc }}"
-    regexp: "^#?colorscheme"
-    line: "colorscheme blackboard"
-    state: present
-  when: ansible_distribution == "Archlinux"
+#- name: set the vim colorscheme
+#  lineinfile:
+#    dest: "{{ vimrc }}"
+#    regexp: "^#?colorscheme"
+#    line: "colorscheme blackboard"
+#    state: present
+#  when: ansible_distribution == "Archlinux"

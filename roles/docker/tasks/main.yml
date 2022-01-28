@@ -5,6 +5,7 @@
     name:
     - "docker"
     - "docker-compose"
+    - "python-docker"
   tags:
   - docker
 
@@ -31,7 +32,7 @@
     advertise_addr: "{{ ansible_default_ipv4.address }}"
     listen_addr: "{{ ansible_default_ipv4.address }}"
   register: swarm
-  when: hostname == "lisa.santorini.dokoupil.cz"
+  when: hostname == "skinner.sellerdale.com"
   tags:
   - docker
 
@@ -39,8 +40,8 @@
   docker_swarm:
     state: join
     advertise_addr: "{{ ansible_default_ipv4.address }}"
-    join_token: "{{ hostvars['lisa.santorini.dokoupil.cz'].swarm.swarm_facts.JoinTokens.Worker }}"
-    remote_addrs: "{{ [hostvars['lisa.santorini.dokoupil.cz'].ansible_default_ipv4.address] }}"
-  when: hostname != "lisa.santorini.dokoupil.cz"
+    join_token: "{{ hostvars['skinner.sellerdale.com'].swarm.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs: "{{ [hostvars['skinner.sellerdale.com'].ansible_default_ipv4.address] }}"
+  when: hostname != "skinner.sellerdale.com"
   tags:
   - docker

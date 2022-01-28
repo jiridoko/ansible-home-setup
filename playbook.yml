@@ -11,15 +11,6 @@
     - common
     - docker
     - file_sharing
-    - temperature
-
-- hosts: flowers
-  become: yes
-  roles:
-    - common
-    - temperature
-    - reboot
-    - flowers
 
 - hosts: visual
   become: yes
