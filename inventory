@@ -10,10 +10,10 @@ vps
 temp
 
 [nas]
-homer.sellerdale.com ansible_host=10.85.0.252 ansible_user=jiri
+homer.sellerdale.com ansible_host=10.85.0.252 #ansible_user=jiri
 
 [vps]
 czenda.dokoupil.cz #ansible_user=root
 
 [hosting]
-skinner.sellerdale.com ansible_host=10.85.0.253 ansible_user=jiri
+skinner.sellerdale.com ansible_host=10.85.0.253 #ansible_user=jiri
