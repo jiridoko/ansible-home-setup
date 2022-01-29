@@ -17,3 +17,6 @@ czenda.dokoupil.cz #ansible_user=root
 
 [hosting]
 skinner.sellerdale.com ansible_host=10.85.0.253 #ansible_user=jiri
+
+[rpi]
+marge.sellerdale.com ansible_host=10.85.0.254 #ansible_user=root

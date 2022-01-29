@@ -29,3 +29,9 @@
   become: yes
   roles:
     - common
+
+- hosts: rpi
+  become: yes
+  roles:
+    - common
+    - dns

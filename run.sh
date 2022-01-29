@@ -11,7 +11,7 @@ elif [ "$1" == "update" ]; then
 elif [ "$1" == "get" -a -n "$2" ]; then
 	ansible -i inventory --vault-password-file ~/.vaultp -m setup "$2"
 elif [ "$1" == "dns" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t zone
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t zone -l rpi
 elif [ "$1" == "snmp" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -t snmp
 elif [ "$1" == "share" ]; then
@@ -30,6 +30,8 @@ elif [ "$1" == "nas" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l nas
 elif [ "$1" == "hosting" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l hosting
+elif [ "$1" == "rpi" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l rpi
 elif [ "$1" == "req" ]; then
 	ansible-galaxy install -p roles/ -r roles/requirements.yml
 fi
