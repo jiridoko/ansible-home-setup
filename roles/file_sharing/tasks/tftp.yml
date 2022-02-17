@@ -1,0 +1,27 @@
+---
+- name: Install TFTP Server
+  package:
+    state: present
+    name:
+    - "atftp"
+  tags:
+  - share
+
+- name: Enable and start the TFTP server
+  service:
+    name: atftpd
+    state: started
+    enabled: yes
+  tags:
+  - share
+
+- name: Create TFTP share directory
+  file:
+    state: directory
+    path: "/srv/atftp"
+    mode: 0777
+    owner: jiri
+    group: jiri
+  tags:
+  - share
+

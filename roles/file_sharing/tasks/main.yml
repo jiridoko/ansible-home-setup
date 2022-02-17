@@ -18,3 +18,7 @@
 - include_tasks: "avahi.yml"
   tags:
   - share
+
+- include_tasks: "tftp.yml"
+  tags:
+  - share
