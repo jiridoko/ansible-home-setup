@@ -1,23 +1,11 @@
 ---
 
-- hosts: jiri-iris
-  become: yes
-  roles:
-    - common
-
 - hosts: hosting
   become: yes
   roles:
     - common
     - docker
     - file_sharing
-
-- hosts: visual
-  become: yes
-  roles:
-    - common
-    - grafana_visual
-    - reboot
 
 - hosts: nas
   become: yes

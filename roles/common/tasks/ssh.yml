@@ -23,10 +23,15 @@
     state: present
   notify: restart sshd
 
-- name: Set git port
+- name: Set ssh config
   copy:
     content: |
       Host git git.santorini.dokoupil.cz
         Port 222
         User git
+      Host switch1 switch1.sellerdale.com 10.85.0.251
+        KexAlgorithms +diffie-hellman-group1-sha1
+        HostKeyAlgorithms +ssh-rsa
+        Ciphers +aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc
+        User root
     dest: /etc/ssh/ssh_config

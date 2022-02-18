@@ -69,6 +69,7 @@
     - "zip"
     - "unzip"
     - "tree"
+    - "ansible"
   when: ansible_distribution == "Archlinux"
   tags:
   - packages
