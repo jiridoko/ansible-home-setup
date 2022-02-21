@@ -32,6 +32,14 @@ nfs:
       path: /mnt
       allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
+    - name: hassos_root
+      path: /mnt/hassos_root
+      allowed_range: "10.85.0.0/24"
+      mount_options: "rw,sync,no_subtree_check,no_root_squash"
+    - name: hassos_boot
+      path: /srv/atftp
+      allowed_range: "10.85.0.0/24"
+      mount_options: "rw,sync,no_subtree_check,no_root_squash"
 
 dlna:
   name: "Skinner DLNA"
