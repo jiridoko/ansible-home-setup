@@ -18,8 +18,13 @@
   roles:
     - common
 
-- hosts: rpi
+- hosts: dns
   become: yes
   roles:
     - common
     - dns
+
+- hosts: haos
+  become: yes
+  roles:
+    - common
