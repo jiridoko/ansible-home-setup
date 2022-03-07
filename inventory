@@ -15,7 +15,3 @@ all:
     dns:
       hosts:
         marge.sellerdale.com:
-    haos:
-      hosts:
-        burns.sellerdale.com:
-          ansible_user: root

@@ -26,6 +26,13 @@
   tags:
   - docker
 
+    #- name: Make sure swarm is off
+    #  docker_swarm:
+    #    state: absent
+    #    force: true
+    #  tags:
+    #  - docker
+
 - name: Create docker swarm
   docker_swarm:
     state: present
