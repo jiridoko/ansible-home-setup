@@ -1,0 +1,27 @@
+---
+- name: Update cache
+  pacman:
+    update_cache: yes
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - update
+
+- name: Install VirtualBox
+  package:
+    state: present
+    name:
+    - "virtualbox"
+    - "virtualbox-host-modules-arch"
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - packages
+
+- name: Reload virtualbox modules
+  command: vboxreload
+  when: ansible_distribution == "Archlinux"
+
+    #- name: Start NFS client
+    #  service:
+    #    name: nfs-client.target
+    #    state: started
+    #    enabled: yes

@@ -6,6 +6,7 @@
     - common
     - docker
     - file_sharing
+    - vm
 
 - hosts: nas
   become: yes
