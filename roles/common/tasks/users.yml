@@ -22,6 +22,12 @@
     state: present
     gid: "9000"
 
+- name: Create jenkins group
+  group:
+    name: jenkins
+    state: present
+    gid: "9001"
+
 - name: Create ansible user
   user:
     name: ansible
@@ -37,6 +43,14 @@
     uid: "9000"
     comment: Jiri System User
 
+- name: Create jenkins user
+  user:
+    name: jenkins
+    password: "{{ root_password }}"
+    group: jenkins
+    uid: "9001"
+    comment: Jenkins System User
+
 - name: Set ansible authorized key
   authorized_key:
     user: ansible
@@ -47,6 +61,12 @@
   authorized_key:
     user: jiri
     key: "{{ all_keys|map(attribute='publish_ssh_key')|join('\n') }}"
+    exclusive: yes
+
+- name: Set jenkins authorized key
+  authorized_key:
+    user: jenkins
+    key: "{{ jenkins_keys|map(attribute='publish_ssh_key')|join('\n') }}"
     exclusive: yes
 
 - name: Upload jiri private key

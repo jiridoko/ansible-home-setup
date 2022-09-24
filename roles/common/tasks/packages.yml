@@ -70,6 +70,7 @@
     - "unzip"
     - "tree"
     - "ansible"
+    - "jdk17-openjdk"
   when: ansible_distribution == "Archlinux"
   tags:
   - packages

@@ -19,7 +19,7 @@
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^#?AllowUsers"
-    line: "AllowUsers jiri root ansible vagrant"
+    line: "AllowUsers jiri root ansible jenkins vagrant"
     state: present
   notify: restart sshd
 
