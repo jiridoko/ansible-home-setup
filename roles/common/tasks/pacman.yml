@@ -15,13 +15,13 @@
     option: ILoveCandy
   when: ansible_distribution == "Archlinux"
 
-#- name: Enable pacman TotalDownload
-#  ini_file:
-#    path: /etc/pacman.conf
-#    allow_no_value: yes
-#    section: options
-#    option: TotalDownload
-#  when: ansible_distribution == "Archlinux"
+- name: Set pacman ParallelDownloads
+  ini_file:
+    path: /etc/pacman.conf
+    value: 5
+    section: options
+    option: ParallelDownloads
+  when: ansible_distribution == "Archlinux"
 
 - name: Enable pacman CheckSpace
   ini_file:
