@@ -25,6 +25,12 @@
     - common
     - dns
 
+- hosts: dns2
+  become: yes
+  roles:
+    #    - common
+    - dns
+
 - hosts: haos
   become: yes
   roles:

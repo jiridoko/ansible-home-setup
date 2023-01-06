@@ -75,12 +75,12 @@
   tags:
   - packages
 
-- name: Install Ubuntu basic tools
+- name: Install Debian basic tools
   package:
     state: present
     name:
     - "sudo"
-    - "vim"
+    - "vim-nox"
     - "htop"
     - "curl"
     - "wget"
@@ -95,9 +95,9 @@
     - "iperf3"
     - "iotop"
     - "python"
-    - "python-flask"
-    - "python-pip"
-    - "python-cryptography"
+    - "python3-flask"
+    - "python3-pip"
+    - "python3-cryptography"
     - "nfs-common"
     - "sl"
     - "screen"
@@ -106,7 +106,8 @@
     - "zip"
     - "unzip"
     - "tree"
-  when: ansible_distribution == "Ubuntu"
+    - "ansible"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
   - packages
 

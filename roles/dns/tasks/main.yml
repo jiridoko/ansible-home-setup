@@ -1,10 +1,22 @@
 ---
-- name: Install bind name server
+- name: Install bind name server ArchLinux
   package:
     state: present
     name:
       - "bind"
       - "bind-tools"
+  when: ansible_distribution == "Archlinux"
+  tags:
+    - zone
+
+- name: Install bind name server Debian
+  package:
+    state: present
+    name:
+      - "bind9"
+      - "bind9-utils"
+      - "bind9-dnsutils"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
     - zone
 
@@ -16,19 +28,79 @@
   tags:
     - zone
 
-- name: Setup Zone files
+- name: Create zone directory Debian
+  file:
+    path: /var/named/
+    state: directory
+    mode: '770'
+    owner: 'bind'
+    group: 'bind'
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Setup Zone files ArchLinux
   template:
     src: zone.j2
     dest: "/var/named/{{ item.name }}.zone"
+    group: 'named'
+    owner: 'named'
+    mode: '644'
   loop: "{{ domains }}"
   notify: restart bind
+  when: ansible_distribution == "Archlinux"
   tags:
     - zone
 
-- name: Setup bind config
+- name: Setup Zone files Debian
+  template:
+    src: zone.j2
+    dest: "/var/named/{{ item.name }}.zone"
+    group: 'bind'
+    owner: 'bind'
+    mode: '644'
+  loop: "{{ domains }}"
+  notify: restart bind
+  when: ansible_facts['os_family'] == "Debian"
+  tags:
+    - zone
+
+- name: Setup 127.0.0.zone file Debian
+  template:
+    src: 127.0.0.zone.j2
+    dest: "/var/named/127.0.0.zone"
+    group: 'bind'
+    owner: 'bind'
+    mode: '644'
+  notify: restart bind
+  when: ansible_facts['os_family'] == "Debian"
+  tags:
+    - zone
+
+- name: Setup localhost.zone file Debian
+  template:
+    src: localhost.zone.j2
+    dest: "/var/named/localhost.zone"
+    group: 'bind'
+    owner: 'bind'
+    mode: '644'
+  notify: restart bind
+  when: ansible_facts['os_family'] == "Debian"
+  tags:
+    - zone
+
+- name: Setup bind config ArchLinux
   template:
     src: named.conf.j2
     dest: "/etc/named.conf"
   notify: restart bind
+  when: ansible_distribution == "Archlinux"
+  tags:
+    - zone
+
+- name: Setup bind config Debian
+  template:
+    src: named.conf.j2
+    dest: "/etc/bind/named.conf"
+  notify: restart bind
+  when: ansible_facts['os_family'] == "Debian"
   tags:
     - zone
