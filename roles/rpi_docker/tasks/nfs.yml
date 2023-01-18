@@ -1,0 +1,58 @@
+---
+- name: Install NFS Server
+  package:
+    state: present
+    name:
+    - "nfs-kernel-server"
+  when: ssd_storage
+  tags:
+  - docker
+
+- name: Create NFS share directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: "{{ item.mode | default('755') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+  loop: "{{ nfs.shares }}"
+  when: ssd_storage
+  tags:
+  - docker
+
+- name: Define NFS exports
+  template:
+    src: exports.nfs.j2
+    dest: /etc/exports
+  register: nfs_exports
+  when: ssd_storage
+  tags:
+  - docker
+
+- name: Export NFS exports
+  command: exportfs -rav
+  when:
+    - nfs_exports.changed == 1
+    - ssd_storage
+  tags:
+  - docker
+
+- name: Enable and start the NFS server
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+  when: ssd_storage
+  tags:
+  - docker
+
+- name: Mount the NFS volume
+  ansible.posix.mount:
+    src: "{{ rpi_docker_storage_node }}:/mnt"
+    path: /mnt
+    opts: rw,sync
+    state: mounted
+    fstype: nfs
+  when: not ssd_storage
+  tags:
+  - docker
