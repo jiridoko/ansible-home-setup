@@ -5,7 +5,7 @@
     name:
     - "ntp"
 
-- name: Set the NTP config
+- name: Set the NTP config ArchLinux
   copy:
     content: |
       server 0.europe.pool.ntp.org iburst
@@ -17,7 +17,23 @@
       restrict ::1
       driftfile /var/lib/ntp/ntp.drift
     dest: /etc/ntp.conf
-  notify: restart ntpd
+  notify: restart ntpd archlinux
+  when: ansible_distribution == "Archlinux"
+
+- name: Set the NTP config Debian
+  copy:
+    content: |
+      server 0.europe.pool.ntp.org iburst
+      server 1.europe.pool.ntp.org iburst
+      server 2.europe.pool.ntp.org iburst
+      server 3.europe.pool.ntp.org iburst
+      restrict default kod limited nomodify nopeer noquery notrap
+      restrict 127.0.0.1
+      restrict ::1
+      driftfile /var/lib/ntp/ntp.drift
+    dest: /etc/ntp.conf
+  notify: restart ntpd debian
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Start and enable the NTP daemon
   service:
@@ -31,4 +47,4 @@
     name: ntp
     state: started
     enabled: yes
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['os_family'] == "Debian"

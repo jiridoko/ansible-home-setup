@@ -17,6 +17,13 @@ afp:
       path: /mnt/raid/video
       users: "jiri ansible root nobody"
       timemachine: no
+    - name: OctoPrint Timelapse
+      path: /mnt/raid/octoprint-timelapse
+      owner: 1000
+      group: 1000
+      mode: 777
+      users: "jiri ansible root nobody"
+      timemachine: no
     - name: Porn
       path: /mnt/raid/porn
       users: "jiri ansible root nobody"
@@ -42,6 +49,13 @@ nfs:
   shares:
     - name: Video
       path: /mnt/raid/video
+      allowed_range: "10.85.0.0/24"
+      mount_options: "rw,sync"
+    - name: OctoPrint Timelapse
+      path: /mnt/raid/octoprint-timelapse
+      owner: 1000
+      group: 1000
+      mode: 777
       allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
     - name: Porn
@@ -86,6 +100,12 @@ dlna:
     - name: Video
       path: /mnt/raid/video
       type: V
+    - name: OctoPrint Timelapse
+      path: /mnt/raid/octoprint-timelapse
+      owner: 1000
+      group: 1000
+      mode: 777
+      type: V
     - name: Porn
       path: /mnt/raid/porn
       type: V
@@ -112,6 +132,16 @@ samba:
       timemachine: yes
     - name: Video
       path: /mnt/raid/video
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+    - name: OctoPrint Timelapse
+      path: /mnt/raid/octoprint-timelapse
+      owner: 1000
+      group: 1000
+      mode: 777
       writable: yes
       browseable: yes
       spotlight: yes

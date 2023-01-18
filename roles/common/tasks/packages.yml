@@ -1,18 +1,38 @@
 ---
-- name: Update cache
+- name: Update cache ArchLinux
   pacman:
     update_cache: yes
   when: ansible_distribution == "Archlinux"
   tags:
   - update
 
-- name: Update system
+- name: Update cache Debian
+  apt:
+    update_cache: yes
+    force_apt_get: yes
+    cache_valid_time: 3600
+  when: ansible_facts['os_family'] == "Debian"
+  tags:
+  - update
+
+- name: Update system ArchLinux
   pacman:
     update_cache: yes
     upgrade: yes
   register: sys_update
   when:
     - ansible_distribution == "Archlinux"
+    - update_system
+  tags:
+  - update
+
+- name: Update system Debian
+  apt:
+    upgrade: dist
+    force_apt_get: yes
+  register: sys_update
+  when:
+    - ansible_facts['os_family'] == "Debian"
     - update_system
   tags:
   - update

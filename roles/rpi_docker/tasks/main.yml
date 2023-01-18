@@ -1,0 +1,70 @@
+---
+- name: Install docker and docker-compose
+  package:
+    state: present
+    name:
+    - "docker.io"
+    - "docker-compose"
+    - "python3-docker"
+  tags:
+  - docker
+
+- name: Enable docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  tags:
+  - docker
+
+- name: Set vm.max_map_count
+  copy:
+    content: |
+      vm.max_map_count=262144
+    dest: /etc/sysctl.d/90-docker.conf
+  notify: reload sysctl
+  tags:
+  - docker
+
+    #- name: Make sure swarm is off
+    #  docker_swarm:
+    #    state: absent
+    #    force: true
+    #  tags:
+    #  - docker
+
+- name: Adding existing user jiri to group sudo
+  user:
+    name: 'jiri'
+    groups: docker
+    append: yes
+  tags:
+  - docker
+
+- name: Adding existing user ansible to group sudo
+  user:
+    name: 'ansible'
+    groups: docker
+    append: yes
+  tags:
+  - docker
+
+- name: Create docker swarm
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ ansible_default_ipv4.address }}"
+    listen_addr: "{{ ansible_default_ipv4.address }}"
+  register: swarm
+  when: hostname == rpi_docker_swarm_master
+  tags:
+  - docker
+
+- name: Join docker swarm
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ ansible_default_ipv4.address }}"
+    join_token: "{{ hostvars[rpi_docker_swarm_master].swarm.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs: "{{ [hostvars[rpi_docker_swarm_master].ansible_default_ipv4.address] }}"
+  when: hostname != rpi_docker_swarm_master
+  tags:
+  - docker

@@ -25,7 +25,13 @@
     - common
     - dns
 
-- hosts: haos
+- hosts: cluster
+  become: yes
+  roles:
+    - common
+    - rpi_docker
+
+- hosts: 3d_printer
   become: yes
   roles:
     - common

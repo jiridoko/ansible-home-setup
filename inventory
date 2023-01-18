@@ -14,5 +14,15 @@ all:
         skinner.sellerdale.com:
     dns:
       hosts:
-        marge.sellerdale.com:
+        #marge.sellerdale.com:
         maggie.sellerdale.com:
+    cluster:
+      hosts:
+        cluster-node-0.sellerdale.com:
+        cluster-node-1.sellerdale.com:
+        cluster-node-2.sellerdale.com:
+        cluster-node-3.sellerdale.com:
+        cluster-node-4.sellerdale.com:
+    3d_printer:
+      hosts:
+        octopi.sellerdale.com:

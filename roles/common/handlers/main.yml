@@ -3,7 +3,12 @@
     name: sshd
     state: restarted
 
-- name: restart ntpd
+- name: restart ntpd archlinux
   service:
     name: ntpd
+    state: restarted
+
+- name: restart ntpd debian
+  service:
+    name: ntp
     state: restarted

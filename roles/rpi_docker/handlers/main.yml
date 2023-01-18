@@ -1,0 +1,8 @@
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+
+- name: reload sysctl
+  command: sysctl --system
+  become: yes

@@ -11,9 +11,9 @@
   file:
     state: directory
     path: "{{ item.path }}"
-    mode: 0777
-    owner: jiri
-    group: jiri
+    mode: "{{ item.mode | default('777') }}"
+    owner: "{{ item.owner | default('jiri') }}"
+    group: "{{ item.group | default('jiri') }}"
   loop: "{{ samba.shares }}"
   tags:
   - share

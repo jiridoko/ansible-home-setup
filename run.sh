@@ -32,8 +32,12 @@ elif [ "$1" == "hosting" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l hosting
 elif [ "$1" == "dns-full" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l dns
-elif [ "$1" == "haos" ]; then
-	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l haos
+elif [ "$1" == "cluster" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l cluster
+elif [ "$1" == "cluster-docker" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l cluster -t docker
+elif [ "$1" == "3dprint" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l 3d_printer
 elif [ "$1" == "req" ]; then
 	ansible-galaxy install -p roles/ -r roles/requirements.yml
 fi
