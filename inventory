@@ -14,7 +14,7 @@ all:
         skinner.sellerdale.com:
     dns:
       hosts:
-        #marge.sellerdale.com:
+        marge.sellerdale.com:
         maggie.sellerdale.com:
     cluster:
       hosts:
