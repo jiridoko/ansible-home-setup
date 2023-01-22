@@ -39,6 +39,7 @@ alias ls="ls --color=auto"
 alias pacman="pacman --color=always"
 alias yaourt="yaourt --color"
 alias less="less -R"
+alias rpitemp="sudo vcgencmd measure_temp"
 
 case ${TERM} in
   xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
@@ -49,6 +50,6 @@ case ${TERM} in
     ;;
 esac
 
-export PATH=~/bin:~/.local/bin:~/go/bin:$PATH
+export PATH=~/bin:~/.local/bin:~/go/bin:/usr/sbin:$PATH
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion

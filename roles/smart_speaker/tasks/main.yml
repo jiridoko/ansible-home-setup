@@ -1,0 +1,95 @@
+---
+- name: Create the directory for rhasspy deb package
+  file:
+    path: /opt/rhasspy/
+    state: directory
+    owner: jiri
+    group: jiri
+    mode: 0755
+  tags:
+  - smart_speaker
+
+- name: Download rhasspy deb package
+  ansible.builtin.get_url:
+    url: "https://github.com/rhasspy/rhasspy/releases/latest/download/rhasspy_{{ architecture }}.deb"
+    dest: /opt/rhasspy/rhasspy.deb
+    mode: 0755
+  tags:
+  - smart_speaker
+
+- name: Install rhasspy
+  ansible.builtin.apt:
+    deb: /opt/rhasspy/rhasspy.deb
+  tags:
+  - smart_speaker
+
+- name: Install rhasspy systemd service file
+  template:
+    src: systemd.service.j2
+    dest: /etc/systemd/system/rhasspy.service
+  vars:
+    description: "rhasspy"
+    after: "network.target"
+    cwd: "/home/pi"
+    systemd_user: "pi"
+    startcmd: "/usr/bin/rhasspy --profile en"
+    systemd_env:
+      - env: "PATH"
+        var: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  notify: reload systemd
+  tags:
+  - smart_speaker
+
+- name: Create config directory for rhasspy
+  file:
+    path: /home/pi/.config/profiles/en/
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+  tags:
+  - smart_speaker
+
+- name: Create rhasspy config
+  template:
+    src: rhasspy_supervisord.conf.j2
+    dest: /home/pi/.config/profiles/en/supervisord.conf
+    owner: jiri
+    group: jiri
+    mode: 0644
+  tags:
+  - smart_speaker
+
+- name: Install mosquitto
+  package:
+    state: present
+    name:
+    - "mosquitto"
+  tags:
+  - smart_speaker
+
+- name: Create mosquitto config
+  template:
+    src: mosquitto.conf.j2
+    dest: /etc/mosquitto/conf.d/rhasspy.conf
+    owner: pi
+    group: pi
+    mode: 0644
+  tags:
+  - smart_speaker
+
+- name: Start and enable mosquitto
+  service:
+    name: mosquitto
+    state: started
+    enabled: yes
+  tags:
+  - smart_speaker
+
+- name: Start and enable the rhasspy service
+  service:
+    name: rhasspy
+    state: started
+    enabled: yes
+  tags:
+  - smart_speaker

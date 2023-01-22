@@ -1,0 +1,3 @@
+hostname: rhasspy1.sellerdale.com
+vimrc: "/etc/vim/vimrc"
+architecture: armhf

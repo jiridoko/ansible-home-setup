@@ -26,3 +26,6 @@ all:
     3d_printer:
       hosts:
         octopi.sellerdale.com:
+    smart_speaker:
+      hosts:
+        rhasspy1.sellerdale.com:

@@ -4,9 +4,22 @@ After={{ after }}
 
 [Service]
 Type=simple
+{% if systemd_user is defined %}
+User={{ systemd_user }}
+{% endif %}
+{% if systemd_group is defined %}
+Group={{ systemd_group }}
+{% endif %}
+{% if systemd_env is defined %}
+{% for i in systemd_env %}
+Environment="{{ i.env }}={{ i.var }}"
+{% endfor %}
+{% endif %}
 WorkingDirectory={{ cwd }}
 ExecStart={{ startcmd }}
 Restart=always
+StandardOutput=inherit
+StandardError=inherit
 
 [Install]
 WantedBy=multi-user.target

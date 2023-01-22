@@ -35,3 +35,9 @@
   become: yes
   roles:
     - common
+
+- hosts: smart_speaker
+  become: yes
+  roles:
+    - common
+    - smart_speaker
