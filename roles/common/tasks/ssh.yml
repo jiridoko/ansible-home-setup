@@ -29,7 +29,7 @@
       Host git git.santorini.dokoupil.cz
         Port 222
         User git
-      Host switch1 switch1.sellerdale.com 10.85.0.251
+      Host switch1 switch1.sellerdale.com 10.85.0.251 apc apc.sellerdale.com 10.85.0.3
         KexAlgorithms +diffie-hellman-group1-sha1
         HostKeyAlgorithms +ssh-rsa
         Ciphers +aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc
