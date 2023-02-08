@@ -74,6 +74,7 @@
     - "git"
     - "base-devel"
     - "gnu-netcat"
+    - "inetutils"
     - "iperf"
     - "iperf3"
     - "iotop"
