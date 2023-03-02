@@ -137,6 +137,13 @@ samba:
       spotlight: yes
       apple_extensions: yes
       timemachine: no
+    - name: 3D Print
+      path: /mnt/raid/3d_print
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
     - name: OctoPrint Timelapse
       path: /mnt/raid/octoprint-timelapse
       owner: 1000
