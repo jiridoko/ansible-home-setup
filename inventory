@@ -3,9 +3,9 @@ all:
   vars:
     ansible_user: ansible
   children:
-    nas:
-      hosts:
-        homer.sellerdale.com:
+#    nas:
+#      hosts:
+#        homer.sellerdale.com:
     vps:
       hosts:
         czenda.dokoupil.cz:
@@ -23,6 +23,7 @@ all:
         cluster-node-2.sellerdale.com:
         cluster-node-3.sellerdale.com:
         cluster-node-4.sellerdale.com:
+        cluster-node-5.sellerdale.com:
     3d_printer:
       hosts:
         octopi.sellerdale.com:

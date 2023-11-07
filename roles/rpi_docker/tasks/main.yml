@@ -1,7 +1,7 @@
 ---
-- include_tasks: "nfs.yml"
-  tags:
-  - docker
+#- include_tasks: "nfs.yml"
+#  tags:
+#  - docker
 
 - include_tasks: "docker.yml"
   tags:
