@@ -3,14 +3,17 @@ all:
   vars:
     ansible_user: ansible
   children:
-#    nas:
-#      hosts:
-#        homer.sellerdale.com:
+    nas:
+      hosts:
+        homer.sellerdale.com:
+          #ansible_user: root
     vps:
       hosts:
         czenda.dokoupil.cz:
     hosting:
       hosts:
+        lisa.sellerdale.com:
+          ansible_user: root
         skinner.sellerdale.com:
     dns:
       hosts:

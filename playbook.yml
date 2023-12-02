@@ -13,6 +13,7 @@
   roles:
     - common
     - file_sharing
+    - unraid_vm
 
 - hosts: vps
   become: yes
