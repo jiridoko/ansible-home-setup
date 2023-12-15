@@ -1,5 +1,6 @@
 hostname: skinner.sellerdale.com
 systemd_boot: true
+vm: false
 
 afp:
   hostname: "skinner"

@@ -33,6 +33,17 @@
     #  tags:
     #  - docker
 
+
+- name: add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  loop:
+  - jiri
+  - ansible
+  - root
+
 - name: Create docker swarm
   docker_swarm:
     state: present

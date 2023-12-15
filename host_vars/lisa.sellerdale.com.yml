@@ -1,5 +1,6 @@
 hostname: lisa.sellerdale.com
 systemd_boot: true
+vm: true
 
 afp:
   hostname: "lisa"

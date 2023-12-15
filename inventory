@@ -12,8 +12,9 @@ all:
         czenda.dokoupil.cz:
     hosting:
       hosts:
-        lisa.sellerdale.com:
+        rancher.sellerdale.com:
           ansible_user: root
+        lisa.sellerdale.com:
         skinner.sellerdale.com:
     dns:
       hosts:

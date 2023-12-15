@@ -4,10 +4,11 @@
     state: present
     name:
     - "qemu-guest-agent"
+  when: vm
 
 - name: Enable and start qemu guest agent
   service:
     name: qemu-guest-agent
     state: started
     enabled: yes
-
+  when: vm

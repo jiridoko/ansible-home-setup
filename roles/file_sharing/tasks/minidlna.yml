@@ -6,6 +6,7 @@
     - "minidlna"
   tags:
   - share
+  when: dlna is defined
 
 - name: Create share directories
   file:
@@ -17,6 +18,7 @@
   loop: "{{ dlna.shares }}"
   tags:
   - share
+  when: dlna is defined
 
 - name: Set minidlna config
   template:
@@ -25,6 +27,7 @@
   notify: restart minidlna
   tags:
   - share
+  when: dlna is defined
 
 - name: Start and enable minidlna
   service:
@@ -33,3 +36,4 @@
     enabled: yes
   tags:
   - share
+  when: dlna is defined
