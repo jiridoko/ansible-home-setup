@@ -2,6 +2,9 @@ hostname: lisa.sellerdale.com
 systemd_boot: true
 vm: true
 
+docker_swarm: "master"
+  # either "master", "slave" or "disabled"
+
 afp:
   hostname: "lisa"
   announce: false

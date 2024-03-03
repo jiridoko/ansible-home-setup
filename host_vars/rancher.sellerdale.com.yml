@@ -2,6 +2,9 @@ hostname: rancher.sellerdale.com
 systemd_boot: true
 vm: true
 
+docker_swarm: "disabled"
+  # either "master", "slave" or "disabled"
+
 afp:
   hostname: "rancher"
   announce: false

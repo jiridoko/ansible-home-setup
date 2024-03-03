@@ -50,7 +50,7 @@
     advertise_addr: "{{ ansible_default_ipv4.address }}"
     listen_addr: "{{ ansible_default_ipv4.address }}"
   register: swarm
-  when: hostname == "skinner.sellerdale.com"
+  when: docker_swarm == "master"
   tags:
   - docker
 
@@ -58,8 +58,8 @@
   docker_swarm:
     state: join
     advertise_addr: "{{ ansible_default_ipv4.address }}"
-    join_token: "{{ hostvars['skinner.sellerdale.com'].swarm.swarm_facts.JoinTokens.Worker }}"
-    remote_addrs: "{{ [hostvars['skinner.sellerdale.com'].ansible_default_ipv4.address] }}"
-  when: hostname != "skinner.sellerdale.com"
+    join_token: "{{ hostvars['lisa.sellerdale.com'].swarm.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs: "{{ [hostvars['lisa.sellerdale.com'].ansible_default_ipv4.address] }}"
+  when: docker_swarm == "slave"
   tags:
   - docker

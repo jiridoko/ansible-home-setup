@@ -13,7 +13,7 @@ all:
     hosting:
       hosts:
         rancher.sellerdale.com:
-          ansible_user: root
+          #ansible_user: root
         lisa.sellerdale.com:
         skinner.sellerdale.com:
     dns:
@@ -31,6 +31,7 @@ all:
     3d_printer:
       hosts:
         octopi.sellerdale.com:
+          ansible_user: root
     smart_speaker:
       hosts:
         rhasspy1.sellerdale.com:

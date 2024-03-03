@@ -2,6 +2,9 @@ hostname: skinner.sellerdale.com
 systemd_boot: true
 vm: false
 
+docker_swarm: "disabled"
+  # either "master", "slave" or "disabled"
+
 afp:
   hostname: "skinner"
   announce: false
