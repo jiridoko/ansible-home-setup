@@ -28,6 +28,13 @@
     state: present
     gid: "9001"
 
+- name: Create pi group
+  group:
+    name: pi
+    state: present
+    gid: "1000"
+  when: rpi
+
 - name: Create ansible user
   user:
     name: ansible
@@ -51,6 +58,15 @@
     uid: "9001"
     comment: Jenkins System User
 
+- name: Create pi user
+  user:
+    name: pi
+    password: "{{ root_password }}"
+    group: pi
+    uid: "1000"
+    comment: Raspberry Pi User
+  when: rpi
+
 - name: Set ansible authorized key
   authorized_key:
     user: ansible
@@ -69,6 +85,13 @@
     key: "{{ jenkins_keys|map(attribute='publish_ssh_key')|join('\n') }}"
     exclusive: yes
 
+- name: Set pi authorized key
+  authorized_key:
+    user: pi
+    key: "{{ all_keys|map(attribute='publish_ssh_key')|join('\n') }}"
+    exclusive: yes
+  when: rpi
+
 - name: Upload jiri private key
   copy:
     content: |
@@ -86,6 +109,26 @@
     owner: jiri
     group: jiri
     mode: 0644
+
+- name: Upload pi private key
+  copy:
+    content: |
+      {{ ssh_key_private }}
+    dest: ~pi/.ssh/id_rsa
+    owner: pi
+    group: pi
+    mode: 0400
+  when: rpi
+
+- name: Upload pi public key
+  copy:
+    content: |
+      {{ ssh_key_public }}
+    dest: ~pi/.ssh/id_rsa.pub
+    owner: pi
+    group: pi
+    mode: 0644
+  when: rpi
 
 - name: Upload ansible private key
   copy:
