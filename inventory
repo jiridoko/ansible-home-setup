@@ -18,6 +18,7 @@ all:
         skinner.sellerdale.com:
     dns:
       hosts:
+        apu.sellerdale.com:
         marge.sellerdale.com:
         maggie.sellerdale.com:
     cluster:
@@ -31,7 +32,7 @@ all:
     3d_printer:
       hosts:
         octopi.sellerdale.com:
-          ansible_user: root
+          #ansible_user: root
     smart_speaker:
       hosts:
         rhasspy1.sellerdale.com:

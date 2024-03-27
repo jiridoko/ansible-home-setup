@@ -1,4 +1,4 @@
-hostname: maggie.sellerdale.com
+hostname: apu.sellerdale.com
 dns_forwarders:
   - "8.8.8.8"
   - "8.8.4.4"
@@ -8,5 +8,6 @@ dns_forwarders:
   - "2001:4860:4860::8844"
   - "2606:4700:4700::1111"
   - "2606:4700:4700::1001"
-vimrc: "/etc/vim/vimrc"
-rpi: true
+#vimrc: "/etc/vim/vimrc"
+systemd_boot: true
+vm: true

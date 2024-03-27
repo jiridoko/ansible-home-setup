@@ -92,6 +92,7 @@
     - "tree"
     - "ansible"
     - "jdk17-openjdk"
+    - "neofetch"
   when: ansible_distribution == "Archlinux"
   tags:
   - packages
@@ -136,6 +137,8 @@
     - "unzip"
     - "tree"
     - "ansible"
+    - "neofetch"
+    - "stress-ng"
   when: ansible_facts['os_family'] == "Debian"
   tags:
   - packages

@@ -87,6 +87,18 @@
   tags:
     - zone
 
+- name: Setup localhost.ip6.zone file Debian
+  template:
+    src: localhost.zone.j2
+    dest: "/var/named/localhost.ip6.zone"
+    group: 'bind'
+    owner: 'bind'
+    mode: '644'
+  notify: restart bind
+  when: ansible_facts['os_family'] == "Debian"
+  tags:
+    - zone
+
 - name: Setup bind config ArchLinux
   template:
     src: named.conf.j2
