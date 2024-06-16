@@ -26,6 +26,7 @@
   roles:
     - common
     - dns
+    - unraid_vm
 
 - hosts: cluster
   become: yes
