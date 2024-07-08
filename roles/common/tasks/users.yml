@@ -22,6 +22,12 @@
     state: present
     gid: "9000"
 
+- name: Create ben group
+  group:
+    name: ben
+    state: present
+    gid: "9002"
+
 - name: Create jenkins group
   group:
     name: jenkins
@@ -49,6 +55,14 @@
     group: jiri
     uid: "9000"
     comment: Jiri System User
+
+- name: Create ben user
+  user:
+    name: ben
+    password: "{{ root_password }}"
+    group: ben
+    uid: "9002"
+    comment: Ben System User
 
 - name: Create jenkins user
   user:
