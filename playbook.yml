@@ -39,6 +39,11 @@
   roles:
     - common
 
+- hosts: common_only
+  become: yes
+  roles:
+    - common
+
 - hosts: smart_speaker
   become: yes
   roles:

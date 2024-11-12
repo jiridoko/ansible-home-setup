@@ -38,6 +38,8 @@ elif [ "$1" == "cluster-docker" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l cluster -t docker
 elif [ "$1" == "3dprint" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l 3d_printer
+elif [ "$1" == "common_only" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l common_only
 elif [ "$1" == "smart-speaker" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l smart_speaker -t smart_speaker
 elif [ "$1" == "smart-speaker-full" ]; then
