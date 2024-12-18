@@ -1,9 +1,20 @@
 ---
-- name: Install Samba
+- name: Install Samba Arch
   package:
     state: present
     name:
     - "samba"
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - share
+
+- name: Install Samba Debian
+  package:
+    state: present
+    name:
+    - "samba"
+    - "samba-common-bin"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
   - share
 
