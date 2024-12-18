@@ -1,513 +1,0 @@
-[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [32m$[39m ./run.sh common_only
-[?2004l[1;35m[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details[0m
-
-PLAY [hosting] *****************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [nas] *********************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [vps] *********************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [dns] *********************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [cluster] *****************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [3d_printer] **************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [common_only] *************************************************************************************************************
-
-TASK [Gathering Facts] *********************************************************************************************************
-[1;35m[WARNING]: Platform linux on host rgb-pi-tree.sellerdale.com is using the discovered Python interpreter at /usr/bin/python3.11,[0m
-[1;35mbut future installation of another Python interpreter could change the meaning of that path. See[0m
-[1;35mhttps://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.[0m
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set hostname] ***************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/users.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Set root password] **********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set root authorized key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ansible group] *******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jiri group] **********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ben group] ***********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jenkins group] *******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create pi group] ************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ansible user] ********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jiri user] ***********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ben user] ************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jenkins user] ********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create pi user] *************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set ansible authorized key] *************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set jiri authorized key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set jenkins authorized key] *************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set pi authorized key] ******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload jiri private key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload jiri public key] *****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload pi private key] ******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload pi public key] *******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload ansible private key] *************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload ansible public key] **************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload root private key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload root public key] *****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/ssh.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Disable root SSH password auth] *********************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Disable password authentication] ********************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set allowed ssh users] ******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set ssh config] *************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/packages.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Update cache ArchLinux] *****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update cache Debian] ********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update system ArchLinux] ****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update system Debian] *******************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update systemd boot] ********************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Reboot system] **************************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Install ArchLinux basic tools] **********************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Add ansible stable repository from PPA and install its signing key on Debian target] ****************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Install Debian basic tools] *************************************************************************************
-[0;31mfatal: [rgb-pi-tree.sellerdale.com]: FAILED! => {"cache_update_time": 1731485455, "cache_updated": false, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"       install 'dnsutils=1:9.18.28-1~deb12u2' 'jq=1.6-2.1' 'golang=2:1.19~1' 'iperf=2.1.8+dfsg-1' 'iperf3=3.12-1+deb12u1' 'iotop=0.6-42-ga14256a-0.1+b1' 'python3-flask=2.2.2-3' 'python3-pip=23.0.1+dfsg-1+rpt1' 'python3-cryptography=38.0.4-3+deb12u1' 'sl=5.02-1' 'screen=4.9.0-4' 'tcpdump=4.99.3-1' 'tree=2.1.0-1' 'ansible=7.7.0+dfsg-3+deb12u1' 'neofetch=7.1.0-4' 'stress-ng=0.15.06-2'' failed: E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 2186 (apt-get)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "rc": 100, "stderr": "E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 2186 (apt-get)\nE: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?\n", "stderr_lines": ["E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 2186 (apt-get)", "E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?"], "stdout": "", "stdout_lines": []}[0m
-
-PLAY RECAP *********************************************************************************************************************
-[0;31mrgb-pi-tree.sellerdale.com[0m : [0;32mok=35  [0m changed=0    unreachable=0    [0;31mfailed=1   [0m [0;36mskipped=6   [0m rescued=0    ignored=0   
-
-[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [31m$[39m ssh rgb-pi-tree
-[?2004lLinux rgb-pi-tree.sellerdale.com 6.6.51+rpt-rpi-v6 #1 Raspbian 1:6.6.51-1+rpt3 (2024-10-08) armv6l
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Wed Nov 13 07:58:25 2024 from 10.85.0.182
-[?2004h[01;32mjiri@rgb-pi-tree[00m:[01;34m~ $[00m sudo apt-get update
-[?2004l0% [Working]            Hit:1 http://raspbian.raspberrypi.com/raspbian bookworm InRelease
-0% [Connected to ppa.launchpadcontent.net (2620:2d:4000:1::81)] [Waiting for headers]                                                                                     Get:2 http://archive.raspberrypi.com/debian bookworm InRelease [39.2 kB]
-                                                                                     0% [Connected to ppa.launchpadcontent.net (2620:2d:4000:1::81)]                                                               0% [Waiting for headers]                        Hit:3 https://ppa.launchpadcontent.net/ansible/ansible/ubuntu focal InRelease
-                        0% [Working]0% [Working]0% [Working]0% [Working]0% [Working]0% [Working]            Get:4 http://archive.raspberrypi.com/debian bookworm/main arm64 Packages [511 kB]
-0% [4 Packages 25.9 kB/511 kB 5%]                                 0% [Working]0% [4 Packages store 0 B]0% [4 Packages store 0 B]                         0% [Working]0% [Working]100% [Working]              Fetched 550 kB in 6s (93.4 kB/s)
-Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 2%Reading package lists... 6%Reading package lists... 10%Reading package lists... 13%Reading package lists... 17%Reading package lists... 21%Reading package lists... 25%Reading package lists... 29%Reading package lists... 33%Reading package lists... 37%Reading package lists... 41%Reading package lists... 45%Reading package lists... 49%Reading package lists... 52%Reading package lists... 54%Reading package lists... 58%Reading package lists... 62%Reading package lists... 66%Reading package lists... 70%Reading package lists... 74%Reading package lists... 78%Reading package lists... 82%Reading package lists... 86%Reading package lists... 90%Reading package lists... 93%Reading package lists... 93%Reading package lists... 93%Reading package lists... 93%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 96%Reading package lists... 96%Reading package lists... 98%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
-W: http://raspbian.raspberrypi.com/raspbian/dists/bookworm/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
-W: https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/dists/focal/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
-[?2004h[01;32mjiri@rgb-pi-tree[00m:[01;34m~ $[00m [?2004l
-logout
-Connection to rgb-pi-tree closed.
-[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [32m$[39m ssh rgb-pi-tree./run.sh common_only\
-[?2004l[?2004h> ^C[?2004l[?2004h[?2004l
-[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [31m$[39m ./run.sh common_only\[K
-[?2004l[1;35m[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details[0m
-
-PLAY [hosting] *****************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [nas] *********************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [vps] *********************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [dns] *********************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [cluster] *****************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [3d_printer] **************************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY [common_only] *************************************************************************************************************
-
-TASK [Gathering Facts] *********************************************************************************************************
-[1;35m[WARNING]: Platform linux on host rgb-pi-tree.sellerdale.com is using the discovered Python interpreter at /usr/bin/python3.11,[0m
-[1;35mbut future installation of another Python interpreter could change the meaning of that path. See[0m
-[1;35mhttps://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.[0m
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set hostname] ***************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/users.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Set root password] **********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set root authorized key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ansible group] *******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jiri group] **********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ben group] ***********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jenkins group] *******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create pi group] ************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ansible user] ********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jiri user] ***********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create ben user] ************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create jenkins user] ********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create pi user] *************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set ansible authorized key] *************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set jiri authorized key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set jenkins authorized key] *************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set pi authorized key] ******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload jiri private key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload jiri public key] *****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload pi private key] ******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload pi public key] *******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload ansible private key] *************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload ansible public key] **************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload root private key] ****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Upload root public key] *****************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/ssh.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Disable root SSH password auth] *********************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Disable password authentication] ********************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set allowed ssh users] ******************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set ssh config] *************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/packages.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Update cache ArchLinux] *****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update cache Debian] ********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update system ArchLinux] ****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update system Debian] *******************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Update systemd boot] ********************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Reboot system] **************************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Install ArchLinux basic tools] **********************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Add ansible stable repository from PPA and install its signing key on Debian target] ****************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Install Debian basic tools] *************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Start NFS client] ***********************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set screenrc for all users] *************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=ansible)[0m
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=jiri)[0m
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=root)[0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/node_exporter.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : package] ********************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Enable prometheus node exporter service] ************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/sudo.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Sudo for ansible] ***********************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Sudo for jiri] **************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Sudo for vagrant] ***********************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/yaourt.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Check if package-query is installed] ****************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Check if yaourt is installed] ***********************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Download package-query] *****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Install package-query] ******************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Remove previous package-query directories] **********************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Download yaourt] ************************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Install yaourt] *************************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Remove previous yaourt directories] *****************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/vim.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Disable the stupid vim mouse integration] ***********************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : set yaml indentation to 2] **************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : create the vim syntax folders for all users] ********************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com] => (item=jiri) [0m
-[0;36mskipping: [rgb-pi-tree.sellerdale.com] => (item=ansible) [0m
-[0;36mskipping: [rgb-pi-tree.sellerdale.com] => (item=root) [0m
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : set the vim truecolors] *****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : set the vim background] *****************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/pacman.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Enable pacman color] ********************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Enable pacman pacman] *******************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set pacman ParallelDownloads] ***********************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Enable pacman CheckSpace] ***************************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/environment.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Set timezone] ***************************************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Enable locale] **************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=en_US.UTF-8)[0m
-[0;32mok: [rgb-pi-tree.sellerdale.com] => (item=en_GB.UTF-8)[0m
-
-TASK [common : Set locale] *****************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set vconsole keyboard] ******************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set MOTD] *******************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set bashrc] *****************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create user bin directories] ************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=root)[0m
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=jiri)[0m
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=ansible)[0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/ntp.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Install NTP] ****************************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set the NTP config ArchLinux] ***********************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set the NTP config Debian] **************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Start and enable the NTP daemon] ********************************************************************************
-[0;36mskipping: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Start and enable the NTP daemon] ********************************************************************************
-[0;32mok: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : include_tasks] **************************************************************************************************
-[0;36mincluded: /home/jiri/ansible-home-setup/roles/common/tasks/git.yml for rgb-pi-tree.sellerdale.com[0m
-
-TASK [common : Create the github file] *****************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set global git email] *******************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Set global git name] ********************************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-TASK [common : Create switching script for personal git] ***********************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=root)[0m
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=jiri)[0m
-[0;33mchanged: [rgb-pi-tree.sellerdale.com] => (item=ansible)[0m
-
-RUNNING HANDLER [common : restart ntpd debian] *********************************************************************************
-[0;33mchanged: [rgb-pi-tree.sellerdale.com][0m
-
-PLAY [smart_speaker] ***********************************************************************************************************
-[0;36mskipping: no hosts matched[0m
-
-PLAY RECAP *********************************************************************************************************************
-[0;33mrgb-pi-tree.sellerdale.com[0m : [0;32mok=67  [0m [0;33mchanged=20  [0m unreachable=0    failed=0    [0;36mskipped=24  [0m rescued=0    ignored=0   
-
-[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [32m$[39m vim inventory 
-[?2004l[?1006;1000h[?1002h[?1049h[22;0;0t[>4;2m[?1h=[?2004h[?1004h[1;45r[?12h[?12l[22;2t[22;1t[27m[29m[m[H[2J[?25l[45;1H"inventory" 44L, 1024B[?1006;1000l[?1002l[2;1H▽[6n[2;1H  [3;1HPzz\[0%m[6n[3;1H           [1;1H[>c]10;?]11;?[1;1H---
-all:[2;5H[K[3;1H  vars:[3;8H[K[4;5Hansible_user: ansible
-  children:
-    nas:[7;7Hhosts:[8;9Hhomer.sellerdale.com:[9;11H#ansible_user: root
-    vps:[11;7Hhosts:[12;9Hczenda.dokoupil.cz:
-    hosting:[14;7Hhosts:[15;9Hrancher.sellerdale.com:[16;11H#ansible_user: root[17;9Hlisa.sellerdale.com:[18;9Hskinner.sellerdale.com:
-    dns:[20;7Hhosts:[21;9Hapu.sellerdale.com:[22;9Hmarge.sellerdale.com:[23;9Hmaggie.sellerdale.com:
-    cluster:[25;7Hhosts:[26;9Hcluster-node-0.sellerdale.com:[27;9Hcluster-node-1.sellerdale.com:[28;9Hcluster-node-2.sellerdale.com:[29;9Hcluster-node-3.sellerdale.com:[30;9Hcluster-node-4.sellerdale.com:[31;9Hcluster-node-5.sellerdale.com:
-    common_only:[33;7Hhosts:
-#[8Ctdrs-reader.sellerdale.com:
-#[10Cansible_user: root[36;9Hrgb-pi-tree.sellerdale.com:[37;11Hansible_user: root
-    3d_printer:[39;7Hhosts:[40;9Hoctopi.sellerdale.com:[41;11H#ansible_user: root
-    smart_speaker:[43;7Hhosts:[44;9Hrhasspy1.sellerdale.com:[45;111H37,28[9CAll[37;28H[?25h[?4m[?25l[45;101H~@k[37;28H[45;101H   [38;15H[45;112H8,15[38;15H[?25h[?25l[45;101H~@k[38;15H[45;101H   [37;28H[45;112H7,28[37;28H[?25h[?25l[45;101H~@k[37;28H[45;101H   [37;27H[45;115H7[37;27H[?25h[?25l[45;101H~@k[37;27H[45;101H   [37;26H[45;115H6[37;26H[?25h[?25l[45;101H~@k[37;26H[45;101H   [37;25H[45;115H5[37;25H[?25h[?25l[45;101H~@k[37;25H[45;101H   [37;24H[45;115H4[37;24H[?25h[?25l[45;101H~@k[37;24H[45;101H   [37;23H[45;115H3[37;23H[?25h[?25l[45;101H~@k[37;23H[45;101H   [37;22H[45;115H2[37;22H[?25h[?25l[45;101H~@k[37;22H[45;101H   [37;21H[45;115H1[37;21H[?25h[?25l[45;101H~@k[37;21H[45;101H   [37;20H[45;115H0[37;20H[?25h[?25l[45;101H~@k[37;20H[45;101H   [37;19H[45;114H19[37;19H[?25h[?25l[45;101H~@k[37;19H[45;101H   [37;18H[45;115H8[37;18H[?25h[?25l[45;101H~@k[37;18H[45;101H   [37;17H[45;115H7[37;17H[?25h[?25l[45;101H~@k[37;17H[45;101H   [37;16H[45;115H6[37;16H[?25h[?25l[45;101H~@k[37;16H[45;101H   [37;15H[45;115H5[37;15H[?25h[?25l[45;101H~@k[37;15H[45;101H   [37;14H[45;115H4[37;14H[?25h[?25l[45;101H~@k[37;14H[45;101H   [37;13H[45;115H3[37;13H[?25h[?25l[45;101H~@k[37;13H[45;101H   [37;12H[45;115H2[37;12H[?25h[?25l[45;101H~@k[37;12H[45;101H   [37;11H[45;115H1[37;11H[?25h[?25l[45;101H~@k[37;11H[45;101H   [37;10H[45;115H0[37;10H[?25h[?25l[45;101H~@k[37;10H[45;101H   [37;9H[45;114H9 [37;9H[?25h[?25l[45;101H~@k[37;9H[45;101H   [37;8H[45;114H8[37;8H[?25h[?25l[45;101H~@k[37;8H[45;101H   [37;7H[45;114H7[37;7H[?25h[?25l[45;101H~@k[37;7H[45;101H   [37;6H[45;114H6[37;6H[?25h[?25l[45;101H~@k[37;6H[45;101H   [37;5H[45;114H5[37;5H[?25h[?25l[45;101H~@k[37;5H[45;101H   [37;4H[45;114H4[37;4H[?25h[?25l[45;101H~@k[37;4H[45;101H   [37;3H[45;114H3[37;3H[?25h[?25l[45;101H~@k[37;3H[45;101H   [37;2H[45;114H2[37;2H[?25h[?25l[45;101H~@k[37;2H[45;101H   [37;1H[45;114H1[37;1H[?25h[?25l[45;101H~@k[37;1H[45;101H   [37;1H[?25h[?25l[45;101H~@k[37;1H[45;101H   [37;1H[?25h[?25l[45;101H~@k[37;1H[45;101H   [37;1H[?25h[?25l[45;101Hi[37;1H[45;101H [37;1H[45;1H[1m-- INSERT --[m[45;13H[K[45;111H37,1[10CAll[37;1H[?25h[?25l#[9C ansible_user: root[45;114H2[37;2H[?25h[45;1H[K[37;1H[?25l[45;101H^[[37;1H[45;101H  [37;2H[45;111H37,1[10CAll[37;1H[?25h[?25l[45;101H~@k[37;1H[45;101H   [36;1H[45;112H6[36;1H[?25h[?25l[45;101H~@k[36;1H[45;101H   [35;1H[45;112H5[35;1H[?25h[?25l[45;101H:[35;1H[45;101H[K[45;1H:[?25hwq[?25l[?2004l[>4;m"inventory" 44L, 1025B written[23;2t[23;1t
-[?1004l[?2004l[?1l>[?1049l[23;0;0t[?25h[>4;m[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [32m$[39m ls
-[?2004lansible.cfg  [0m[01;34mhost_vars[0m  playbook_vagrant.yml  [01;34mroles[0m   screenlog.0  [01;34mtemplates[0m
-[01;34mgroup_vars[0m   inventory  playbook.yml          [01;32mrun.sh[0m  screenlog.1  Vagrantfile
-[?2004h[92mjiri[94m@lisa[39m[34m (master)[39m [93mansible-home-setup[39m [32m$[39m [?2004l
-exit
