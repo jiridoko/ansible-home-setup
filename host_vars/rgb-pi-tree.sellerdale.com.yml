@@ -1,0 +1,3 @@
+hostname: rgb-pi-tree.sellerdale.com
+vimrc: "/etc/vim/vimrc"
+rpi: true

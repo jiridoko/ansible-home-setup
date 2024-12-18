@@ -1,9 +1,19 @@
 ---
-- name: Install TFTP Server
+- name: Install TFTP Server Arch
   package:
     state: present
     name:
     - "atftp"
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - share
+
+- name: Install TFTP Server Debian
+  package:
+    state: present
+    name:
+    - "atftpd"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
   - share
 

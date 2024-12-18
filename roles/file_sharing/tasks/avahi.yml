@@ -1,11 +1,22 @@
 ---
-- name: Install Avahi
+- name: Install Avahi Arch
   package:
     state: present
     name:
     - "avahi"
     - "nss-mdns"
     - "libnss_nis"
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - share
+
+- name: Install Avahi Debian
+  package:
+    state: present
+    name:
+    - "avahi-daemon"
+    - "avahi-utils"
+  when: ansible_facts['os_family'] == "Debian"
   tags:
   - share
 

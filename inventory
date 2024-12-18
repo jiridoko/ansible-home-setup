@@ -31,8 +31,10 @@ all:
         cluster-node-5.sellerdale.com:
     common_only:
       hosts:
-        tdrs-reader.sellerdale.com:
-          ansible_user: root
+#        tdrs-reader.sellerdale.com:
+#          ansible_user: root
+        rgb-pi-tree.sellerdale.com:
+#          ansible_user: root
     3d_printer:
       hosts:
         octopi.sellerdale.com:

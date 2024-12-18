@@ -56,18 +56,38 @@
   tags:
   - share
 
-- name: Start and enable samba
+- name: Start and enable samba Arch
   service:
     name: smb
     state: started
     enabled: yes
+  when: ansible_distribution == "Archlinux"
   tags:
   - share
 
-- name: Start and enable nmb
+- name: Start and enable samba Debian
+  service:
+    name: smbd
+    state: started
+    enabled: yes
+  when: ansible_facts['os_family'] == "Debian"
+  tags:
+  - share
+
+- name: Start and enable nmb Arch
   service:
     name: nmb
     state: started
     enabled: yes
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - share
+
+- name: Start and enable nmb Debian
+  service:
+    name: nmbd
+    state: started
+    enabled: yes
+  when: ansible_facts['os_family'] == "Debian"
   tags:
   - share

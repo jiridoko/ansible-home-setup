@@ -38,6 +38,7 @@
   become: yes
   roles:
     - common
+    - file_sharing
 
 - hosts: common_only
   become: yes
