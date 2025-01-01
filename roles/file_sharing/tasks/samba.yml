@@ -4,6 +4,7 @@
     state: present
     name:
     - "samba"
+    - "wsdd"
   when: ansible_distribution == "Archlinux"
   tags:
   - share
@@ -70,6 +71,15 @@
 - name: Start and enable samba Arch
   service:
     name: smb
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - share
+
+- name: Start and enable wsdd Arch
+  service:
+    name: wsdd
     state: started
     enabled: yes
   when: ansible_distribution == "Archlinux"

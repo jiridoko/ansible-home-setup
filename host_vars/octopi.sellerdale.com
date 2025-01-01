@@ -51,7 +51,16 @@ samba:
   shares:
     - name: Klipper
       path: /home/pi/klipper
-      writable: no
+      writable: yes
+      browseable: yes
+      spotlight: yes
+      apple_extensions: yes
+      timemachine: no
+      owner: pi
+      group: pi
+    - name: printer_data
+      path: /home/pi/printer_data
+      writable: yes
       browseable: yes
       spotlight: yes
       apple_extensions: yes
