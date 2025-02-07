@@ -18,3 +18,8 @@
   service:
     name: smb
     state: restarted
+
+- name: restart nmbd
+  service:
+    name: nmb
+    state: restarted

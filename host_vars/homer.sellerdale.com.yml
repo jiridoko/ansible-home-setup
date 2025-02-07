@@ -118,8 +118,12 @@ samba:
   name: "homer"
   announce: true
   mimic_model: "AirPort7,120"
-  hosts_allow: "10.85.0."
-  wins_support: "yes"
+  hosts_allow: "10.85.0. sellerdale.com 2a10:d582:3e22:: fe80::"
+  interface: "enp1s0"
+  wins_support: "no"
+  wins_proxy: "yes"
+  #wins_server: "10.85.0.196"
+  dns_proxy: "yes"
   logs: "/var/log/samba/log.%m"
   log_dir: "/var/log/samba/"
   shares:

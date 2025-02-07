@@ -93,6 +93,7 @@
     - "ansible"
     - "jdk17-openjdk"
     - "neofetch"
+    - "man"
   when: ansible_distribution == "Archlinux"
   tags:
   - packages

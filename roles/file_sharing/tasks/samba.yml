@@ -44,7 +44,9 @@
   template:
     src: samba.j2
     dest: /etc/samba/smb.conf
-  notify: restart samba
+  notify:
+    - restart samba
+    - restart nmbd
   tags:
   - share
 
