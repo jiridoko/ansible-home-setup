@@ -7,13 +7,14 @@
     - docker
     - file_sharing
     - vm
-    - unraid_vm
+#    - unraid_vm
 
 - hosts: nas
   become: yes
   roles:
     - common
     - file_sharing
+    - proxy
     - unraid_vm
 
 - hosts: vps

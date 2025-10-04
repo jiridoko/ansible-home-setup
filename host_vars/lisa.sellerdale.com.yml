@@ -11,7 +11,7 @@ afp:
   domain: "sellerdale.com"
   mimic_model: "AirPort7,120"
   admin_group: "jiri"
-  hosts_allow: "10.85.0.0/24"
+  hosts_allow: "10.0.0.0/8"
   shares:
     - name: General
       path: /mnt/general
@@ -34,7 +34,7 @@ nfs:
   shares:
     - name: mnt
       path: /mnt
-      allowed_range: "10.85.0.0/24"
+      allowed_range: "10.0.0.0/8"
       mount_options: "rw,sync"
     - name: hassos_root
       path: /mnt/hassos_root
@@ -61,6 +61,9 @@ dlna:
     - name: Pictures
       path: /mnt/pictures
       type: P
+    - name: General
+      path: /mnt/general
+      type: V
 
 samba:
   workgroup: "WORKGROUP"

@@ -74,6 +74,10 @@ nfs:
       path: /mnt/raid/general
       allowed_range: "10.85.0.0/24"
       mount_options: "rw,sync"
+    - name: 3D_Print
+      path: /mnt/raid/3d_print
+      allowed_range: "10.85.0.0/24"
+      mount_options: "rw,sync"
     - name: SSD
       path: /mnt/ssd
       allowed_range: "10.85.0.0/24"

@@ -1,0 +1,34 @@
+---
+- name: Install Nginx
+  package:
+    state: present
+    name:
+    - "nginx"
+  tags:
+  - proxy
+
+- name: Set proxy pac script
+  copy:
+    content: |
+        function FindProxyForURL(url, host) {
+          if (isInNet(host, '10.0.0.0', '255.0.0.0')) {
+            return 'DIRECT';
+          }
+          return 'PROXY dokoupil.cz:3128; DIRECT';
+        }
+    dest: /usr/share/nginx/html/proxy.pac
+    owner: root
+    group: root
+    mode: 0666
+  notify:
+    - restart nginx
+  tags:
+  - proxy
+
+- name: Start and enable Nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  tags:
+  - proxy
