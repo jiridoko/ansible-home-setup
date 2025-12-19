@@ -20,6 +20,7 @@ all:
       hosts:
         apu.sellerdale.com:
         marge.sellerdale.com:
+          ansible_user: pi
         maggie.sellerdale.com:
     cluster:
       hosts:

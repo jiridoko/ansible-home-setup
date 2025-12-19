@@ -10,5 +10,5 @@
 
 - name: restart ntpd debian
   service:
-    name: ntp
+    name: openntpd
     state: restarted

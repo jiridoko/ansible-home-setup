@@ -98,13 +98,13 @@
   tags:
   - packages
 
-- name: Add ansible stable repository from PPA and install its signing key on Debian target
-  ansible.builtin.apt_repository:
-    repo: 'ppa:ansible/ansible'
-    codename: focal
-  when: ansible_facts['os_family'] == "Debian"
-  tags:
-  - packages
+#- name: Add ansible stable repository from PPA and install its signing key on Debian target
+#  ansible.builtin.apt_repository:
+#    repo: 'ppa:ansible/ansible'
+#    codename: focal
+#  when: ansible_facts['os_family'] == "Debian"
+#  tags:
+#  - packages
 
 - name: Install Debian basic tools
   package:
