@@ -1,0 +1,17 @@
+- name: Install Emby
+  package:
+    state: present
+    name:
+    - "emby-server"
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - media_server
+
+- name: Start and enable Emby
+  service:
+    name: emby-server
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - media_server

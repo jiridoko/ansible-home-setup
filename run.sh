@@ -30,6 +30,8 @@ elif [ "$1" == "nas" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l nas
 elif [ "$1" == "hosting" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l hosting
+elif [ "$1" == "media-server" ]; then
+	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l nas -t media_server
 elif [ "$1" == "dns-full" ]; then
 	ansible-playbook -i inventory --vault-password-file ~/.vaultp playbook.yml -l dns
 elif [ "$1" == "cluster" ]; then

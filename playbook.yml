@@ -15,6 +15,7 @@
     - common
     - file_sharing
     - proxy
+    - media_server
     - unraid_vm
 
 - hosts: vps
