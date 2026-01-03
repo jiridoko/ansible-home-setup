@@ -5,7 +5,7 @@
     name:
     - "docker.io"
     - "docker-compose"
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_facts['distribution'] == "Ubuntu"
 
 - name: Start docker engine
   service:

@@ -5,7 +5,7 @@
     name:
       - "bind"
       - "bind-tools"
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
     - zone
 
@@ -46,7 +46,7 @@
     mode: '644'
   loop: "{{ domains }}"
   notify: restart bind
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
     - zone
 
@@ -104,7 +104,7 @@
     src: named.conf.j2
     dest: "/etc/named.conf"
   notify: restart bind
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
     - zone
 

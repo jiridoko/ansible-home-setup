@@ -2,7 +2,7 @@
 - name: Update cache ArchLinux
   pacman:
     update_cache: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - update
 
@@ -21,7 +21,7 @@
     upgrade: yes
   register: sys_update
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - update_system
   tags:
   - update
@@ -40,8 +40,8 @@
 - name: Update systemd boot
   command: bootctl update
   when:
-    - ansible_distribution == "Archlinux"
-    - ansible_machine == "x86_64"
+    - ansible_facts['distribution'] == "Archlinux"
+    - ansible_facts['machine'] == "x86_64"
     - update_system
     - systemd_boot
     - '"systemd" in sys_update.packages'
@@ -52,7 +52,7 @@
   reboot:
     reboot_timeout: 300
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - update_system
     - '"linux" in sys_update.packages'
   tags:
@@ -94,7 +94,7 @@
     - "jdk17-openjdk"
     - "neofetch"
     - "man"
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - packages
 

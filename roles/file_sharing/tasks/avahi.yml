@@ -6,7 +6,7 @@
     - "avahi"
     - "nss-mdns"
     - "libnss_nis"
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - share
 

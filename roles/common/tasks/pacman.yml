@@ -5,7 +5,7 @@
     allow_no_value: yes
     section: options
     option: Color
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Enable pacman pacman
   ini_file:
@@ -13,7 +13,7 @@
     allow_no_value: yes
     section: options
     option: ILoveCandy
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Set pacman ParallelDownloads
   ini_file:
@@ -21,7 +21,7 @@
     value: 5
     section: options
     option: ParallelDownloads
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Enable pacman CheckSpace
   ini_file:
@@ -29,4 +29,4 @@
     allow_no_value: yes
     section: options
     option: CheckSpace
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"

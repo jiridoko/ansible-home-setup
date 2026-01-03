@@ -4,14 +4,14 @@
   register: package_query_check
   changed_when: package_query_check.rc == 1
   failed_when: package_query_check.rc not in [0,1]
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Check if yaourt is installed
   command: pacman -Qi yaourt
   register: yaourt_check
   changed_when: yaourt_check.rc == 1
   failed_when: yaourt_check.rc not in [0,1]
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Download package-query
   command: git clone https://aur.archlinux.org/package-query.git
@@ -20,7 +20,7 @@
   register: download_package_query
   become_user: "{{ yaourt_user }}"
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - package_query_check.rc != 0
 
 - name: Install package-query
@@ -29,7 +29,7 @@
     chdir: "~{{ yaourt_user }}/package-query"
   become_user: "{{ yaourt_user }}"
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - package_query_check.rc != 0
 
 - name: Remove previous package-query directories
@@ -37,7 +37,7 @@
     state: absent
     path: "~{{ yaourt_user }}/package-query"
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - package_query_check.rc != 0
 
 - name: Download yaourt
@@ -46,7 +46,7 @@
     chdir: "~{{ yaourt_user }}/"
   become_user: "{{ yaourt_user }}"
   when: 
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - yaourt_check.rc != 0
 
 - name: Install yaourt
@@ -55,7 +55,7 @@
     chdir: "~{{ yaourt_user }}/yaourt"
   become_user: "{{ yaourt_user }}"
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - yaourt_check.rc != 0
 
 - name: Remove previous yaourt directories
@@ -63,6 +63,6 @@
     state: absent
     path: "~{{ yaourt_user }}/yaourt"
   when:
-    - ansible_distribution == "Archlinux"
+    - ansible_facts['distribution'] == "Archlinux"
     - yaourt_check.rc != 0
 

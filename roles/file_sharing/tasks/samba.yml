@@ -5,7 +5,7 @@
     name:
     - "samba"
     - "wsdd"
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - share
 
@@ -75,7 +75,7 @@
     name: smb
     state: started
     enabled: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - share
 
@@ -84,7 +84,7 @@
     name: wsdd
     state: started
     enabled: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - share
 
@@ -102,7 +102,7 @@
     name: nmb
     state: started
     enabled: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - share
 

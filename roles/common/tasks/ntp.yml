@@ -4,7 +4,7 @@
     state: present
     name:
     - "ntp"
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Install NTP Debian
   package:
@@ -26,7 +26,7 @@
       driftfile /var/lib/ntp/ntp.drift
     dest: /etc/ntp.conf
   notify: restart ntpd archlinux
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Set the NTP config Debian
   copy:
@@ -44,7 +44,7 @@
     name: ntpd
     state: started
     enabled: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
 - name: Start and enable the NTP daemon
   service:

@@ -2,7 +2,7 @@
 - name: Update cache
   pacman:
     update_cache: yes
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - update
 
@@ -12,13 +12,13 @@
     name:
     - "virtualbox"
     - "virtualbox-host-modules-arch"
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
   tags:
   - packages
 
 - name: Reload virtualbox modules
   command: vboxreload
-  when: ansible_distribution == "Archlinux"
+  when: ansible_facts['distribution'] == "Archlinux"
 
     #- name: Start NFS client
     #  service:
