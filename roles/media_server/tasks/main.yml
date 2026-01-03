@@ -15,3 +15,14 @@
   when: ansible_distribution == "Archlinux"
   tags:
   - media_server
+
+- name: Add emby user to groups
+  user:
+    name: emby
+    group: emby
+    groups:
+    - emby
+    - jiri
+  when: ansible_distribution == "Archlinux"
+  tags:
+  - media_server
